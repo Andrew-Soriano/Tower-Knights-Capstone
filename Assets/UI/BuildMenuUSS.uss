@@ -1,0 +1,121 @@
+:root {
+}
+
+.build_container {
+    flex-grow: 1;
+    width: 40%;
+    height: 100%;
+    flex-direction: column;
+    align-self: flex-end;
+    background-color: rgba(16, 21, 89, 0.46);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    position: absolute;
+}
+
+.build_label {
+    flex-direction: column;
+    padding-left: 2px;
+    -unity-text-align: middle-center;
+    border-bottom-width: 3px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.build_button {
+    height: auto;
+    width: 40%;
+    white-space: pre;
+    align-self: auto;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    align-items: auto;
+}
+
+.StatusBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.IconContainer {
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.CenterContainer {
+    position: absolute;
+    left: 50%;
+    width: 120px;
+    margin-left: -60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.StatusResourceIcon {
+    width: 16px;
+    height: 16px;
+    max-height: 80%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.NextRoundButton {
+    width: 120px;
+    height: 40px;
+}
+
+.StatusResourceGroup {
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.StatusResourceCount {
+    width: 32px;
+    -unity-text-align: middle-center;
+    color: white;
+    font-size: 15px;
+    margin-left: 2px;
+}
+
+.CostResourceGroup {
+    flex-direction: row;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+    justify-content: space-between;
+}
+
+.CostResourceCount {
+    width: 16px;
+    -unity-text-align: middle-center;
+    color: white;
+    font-size: 15px;
+    margin-left: 2px;
+}
+
+.CostResourceIcon {
+    width: 16px;
+    height: 16px;
+    max-height: 80%;
+    -unity-background-scale-mode: scale-to-fit;
+}

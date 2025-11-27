@@ -9,7 +9,7 @@ public class ResourceTile : BuildableTile
 {
     public ResourceType type;
     public int amountPerRound;
-    [HideInInspector] public string tileName;
+    public string tileName;
 
     private bool _built = false;
 
@@ -47,8 +47,7 @@ public class ResourceTile : BuildableTile
     {
         if (_built)
         {
-            CastleController.instance.stockpile.Add(type, amountPerRound);
-            UIManager.instance.RefreshResourceUI(CastleController.instance.stockpile);
+            CastleController.instance.AddResourceToStock(type, amountPerRound);
         }
     }
 }

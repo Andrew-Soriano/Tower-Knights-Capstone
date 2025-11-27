@@ -4,31 +4,31 @@
         <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px;">
             <ui:VisualElement name="IconsContainer" class="IconContainer">
                 <ui:VisualElement name="WoodGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                    <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
                     <ui:Label name="WoodCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="PlanksGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="PlanksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Planks.png?fileID=21300000&amp;guid=d401cfef17300b14a8b7fa99b56202b6&amp;type=3#Icon_Planks&quot;);" />
+                    <ui:VisualElement name="PlanksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Planks.png?fileID=21300000&amp;guid=d401cfef17300b14a8b7fa99b56202b6&amp;type=3#Icon_Planks&quot;);" />
                     <ui:Label name="PlanksCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="StoneGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="StoneIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Stone.png?fileID=21300000&amp;guid=1aea025b33cc12e42be8ae403aea823b&amp;type=3#Icon_Stone&quot;);" />
+                    <ui:VisualElement name="StoneIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Stone.png?fileID=21300000&amp;guid=1aea025b33cc12e42be8ae403aea823b&amp;type=3#Icon_Stone&quot;);" />
                     <ui:Label name="StoneCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="BricksGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="BricksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Bricks.png?fileID=21300000&amp;guid=13db1b11c8f8f5f47ae94c50130f74e3&amp;type=3#Icon_Bricks&quot;);" />
+                    <ui:VisualElement name="BricksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Bricks.png?fileID=21300000&amp;guid=13db1b11c8f8f5f47ae94c50130f74e3&amp;type=3#Icon_Bricks&quot;);" />
                     <ui:Label name="BricksCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="OreGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="OreIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Ore.png?fileID=21300000&amp;guid=75ab73bec60818a4e99ffc26f82214fe&amp;type=3#Icon_Ore&quot;);" />
+                    <ui:VisualElement name="OreIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Ore.png?fileID=21300000&amp;guid=75ab73bec60818a4e99ffc26f82214fe&amp;type=3#Icon_Ore&quot;);" />
                     <ui:Label name="OreCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="MetalGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="MetalIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Metal.png?fileID=21300000&amp;guid=3d6f05ecbdb73e343a7bf074012de927&amp;type=3#Icon_Metal&quot;);" />
+                    <ui:VisualElement name="MetalIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Metal.png?fileID=21300000&amp;guid=3d6f05ecbdb73e343a7bf074012de927&amp;type=3#Icon_Metal&quot;);" />
                     <ui:Label name="MetalCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="PartsGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="PartsIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
+                    <ui:VisualElement name="PartsIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
                     <ui:Label name="PartsCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="RoundGroup" class="StatusResourceGroup">
@@ -40,30 +40,74 @@
                 <ui:Button text="Next Round" name="NextRoundButton" class="NextRoundButton" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Build" class="build_container" style="display: flex; visibility: visible; position: absolute; height: 84%; top: 16%;">
+        <ui:VisualElement name="Build" class="build_container" style="display: none; visibility: visible; position: absolute; height: 84%; top: 16%;">
             <ui:Label text="Build" name="Label" class="build_label" />
-            <ui:TabView style="width: 100%; height: 100%;">
+            <ui:TabView name="BuildTabView" style="width: 100%; height: 100%;">
                 <ui:Tab label="Towers" name="TowersTab" closeable="false">
                     <ui:VisualElement name="ArcherGroup" style="flex-grow: 1;">
                         <ui:Button text="Archery Tower" name="BuildArcherButton" class="build_button" />
                         <ui:VisualElement name="ArcherWoodGroup" class="CostResourceGroup">
-                            <ui:VisualElement name="ArcherWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                            <ui:VisualElement name="ArcherWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
                             <ui:Label name="ArcherWoodCount" text="00" class="CostResourceCount" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:Tab>
-                <ui:Tab label="Crafting" name="CraftingTab" closeable="true" />
+                <ui:Tab label="Crafting" name="CraftingTab" closeable="true">
+                    <ui:VisualElement name="Sawmill" style="flex-grow: 1;">
+                        <ui:Button text="Sawmill&#10;" name="BuildSawmillButton" class="build_button" />
+                        <ui:VisualElement name="ResourceCountContainer" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; padding-left: 8px;">
+                            <ui:VisualElement name="SawmillWoodGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="SawmillWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                                <ui:Label name="SawmillWoodCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="SawmillPartsGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="SawmillPartsIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
+                                <ui:Label name="SawmillPartsCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:Tab>
             </ui:TabView>
         </ui:VisualElement>
-        <ui:VisualElement name="Resource" class="build_container" style="display: flex; visibility: hidden; position: absolute; height: 90%; top: 34px; left: 440px;">
+        <ui:VisualElement name="Resource" class="build_container" style="display: none; visibility: visible; position: absolute; height: 90%; top: 34px; left: 440px;">
             <ui:Label text="Resource" name="Label" class="build_label" />
             <ui:Button text="Archery Tower" name="BuildResourceButton" class="build_button" style="width: 118px; height: 108px; left: auto; right: 25%; top: 20px;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Tower" class="build_container" style="display: flex; visibility: visible; position: absolute; height: 84%; top: 16%; left: 440px;">
-            <ui:Label text="Tower" name="TowerLabel" class="build_label" />
-            <ui:VisualElement name="TowerRotateContainer" style="flex-grow: 0; flex-direction: row; height: auto; justify-content: space-between; width: 100%;">
+        <ui:VisualElement name="Upgrade" class="build_container" style="display: flex; visibility: visible; position: absolute; height: 84%; top: 16%; left: 440px;">
+            <ui:Label text="Upgrade" name="UpgradeLabel" class="build_label" />
+            <ui:VisualElement name="TowerRotateContainer" style="flex-grow: 0; flex-direction: row; height: auto; justify-content: space-between; width: 100%; display: flex; visibility: visible;">
                 <ui:Button text="Rotate Left" name="RotateLeft" style="width: 64px;" />
                 <ui:Button text="Rotate Right" name="RotateRight" style="width: 64px; align-self: auto; align-items: auto;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Upgrades" class="upgrades_grid">
+                <ui:VisualElement name="UpgradeButton1Container" class="upgrade_container">
+                    <ui:VisualElement name="UpgradeButton1" class="upgrade_button">
+                        <ui:VisualElement name="Icon" class="upgrade_icon" />
+                        <ui:Button name="Button" class="upgrade_click_area" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="UpgradeButton2Container" class="upgrade_container">
+                    <ui:VisualElement name="UpgradeButton2" class="upgrade_button">
+                        <ui:VisualElement name="Icon" class="upgrade_icon" />
+                        <ui:Button name="Button" class="upgrade_click_area" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="UpgradeButton3Container" class="upgrade_container">
+                    <ui:VisualElement name="UpgradeButton3" class="upgrade_button">
+                        <ui:VisualElement name="Icon" class="upgrade_icon" />
+                        <ui:Button name="Button" class="upgrade_click_area" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="UpgradeButton4Container" class="upgrade_container">
+                    <ui:VisualElement name="UpgradeButton4" class="upgrade_button">
+                        <ui:VisualElement name="Icon" class="upgrade_icon" />
+                        <ui:Button name="Button" class="upgrade_click_area" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="UpgradeHoverMenu" class="hover-menu" style="display: flex; left: -73%; width: 70%; height: 120%;">
+                    <ui:Label name="UpgradeHoverName" text="Upgrade Name" class="hover-menu-name" style="font-size: 16px;" />
+                    <ui:Label name="UpgradeHoverDescription" text="Description goes here" class="hover-menu-description" style="flex-wrap: wrap;" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -1375,6 +1375,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2455670116556704903, guid: 05bf4fc68e21a9d42be592de63fd6bc4, type: 3}
+      propertyPath: stockpile.wood
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2455670116556704903, guid: 05bf4fc68e21a9d42be592de63fd6bc4, type: 3}
+      propertyPath: stockpile.parts
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8164281396297948505, guid: 05bf4fc68e21a9d42be592de63fd6bc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.62

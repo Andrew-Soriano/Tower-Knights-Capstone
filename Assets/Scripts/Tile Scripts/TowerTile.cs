@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum towerID
 {
-    Archer
+    Archer,
+    Sawmill
 }
 
 public class TowerTile : BuildableTile
@@ -12,16 +13,20 @@ public class TowerTile : BuildableTile
     [Header("Tower Prefabs")]
     [SerializeField] private GameObject _ArcherTower;
 
+    [Header("Crafting Prefabs")]
+    [SerializeField] private GameObject _SawmillTower;
+
     public void buildTower(towerID id)
     {
+        GameObject tower;
         //Instantiate tower by id
         switch (id)
         {
             case towerID.Archer:
-                GameObject tower = Instantiate(_ArcherTower, transform.position, Quaternion.identity);
-                Debug.Log("_towerModel local: " + tower.transform.Find("building_archeryrange_blue").localPosition);
-                Debug.Log("_front local: " + tower.transform.Find("building_archeryrange_blue/Front").localPosition);
-                Debug.Log("_front world: " + tower.transform.Find("building_archeryrange_blue/Front").position);
+                tower = Instantiate(_ArcherTower, transform.position, Quaternion.identity);
+                break;
+            case towerID.Sawmill:
+                tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);
                 break;
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -10,10 +11,12 @@ public class EnemyController : MonoBehaviour
     private int _anim_attack;
     private int _anim_death;
 
-    public float speed = 3;
+    [SerializeField] private EnemyType type;
+    private float _speed;
 
-    [SerializeField] private int _maxHP = 30;
+    [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
+    private Dictionary<DamageType, float> _damageResistances;
 
     public event Action onDeath;
 
@@ -25,14 +28,18 @@ public class EnemyController : MonoBehaviour
         _anim_attack = Animator.StringToHash("Attack");
         _anim_death = Animator.StringToHash("Death");
 
+        EnemyStats stats = EnemyData.GetStats(type);
+        _maxHP = stats.MaxHP;
         _HP = _maxHP;
+        _speed = stats.Speed;
+        _damageResistances = stats.Resistances;
     }
 
     public void startPath(SplineContainer path)
     {
         _spline_anim.Container = path;
         _spline_anim.Loop = SplineAnimate.LoopMode.Once;
-        _spline_anim.Duration = _spline_anim.Container.CalculateLength()/speed;
+        _spline_anim.Duration = _spline_anim.Container.CalculateLength()/_speed;
 
         _spline_anim.Play();
     }
@@ -49,9 +56,9 @@ public class EnemyController : MonoBehaviour
         Destroy(this.transform.gameObject);
     }
 
-    public void Damage(int damage)
+    public void Damage(int damage, DamageType type)
     {
-        _HP -= damage;
+        _HP -= (int) (damage * 1f - _damageResistances[type]);
 
         if (_HP <= 0)
         {

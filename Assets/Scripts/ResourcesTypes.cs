@@ -62,6 +62,21 @@ public class Resources : IEnumerable<int>
         return GetEnumerator();
     }
 
+    public int GetAmount(ResourceType type)
+    {
+        return type switch
+        {
+            ResourceType.Wood => Wood,
+            ResourceType.Planks => Planks,
+            ResourceType.Stone => Stone,
+            ResourceType.Bricks => Bricks,
+            ResourceType.Ore => Ore,
+            ResourceType.Metal => Metal,
+            ResourceType.Parts => Parts,
+            _ => 0
+        };
+    }
+
     public bool HasResources(Resources cost)
     {
         // Array of "this" resource values in the same order as GetEnumerator
@@ -116,5 +131,19 @@ public class Resources : IEnumerable<int>
             case ResourceType.Metal: metal += amount; break;
             case ResourceType.Parts: parts += amount; break;
         }
+    }
+
+    public void Subtract(ResourceType type, int amount)
+    {
+        switch (type)
+                {
+                    case ResourceType.Wood: wood -= amount; break;
+                    case ResourceType.Planks: planks -= amount; break;
+                    case ResourceType.Stone: stone -= amount; break;
+                    case ResourceType.Bricks: bricks -= amount; break;
+                    case ResourceType.Ore: ore -= amount; break;
+                    case ResourceType.Metal: metal -= amount; break;
+                    case ResourceType.Parts: parts -= amount; break;
+                }
     }
 }

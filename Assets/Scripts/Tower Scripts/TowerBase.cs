@@ -1,42 +1,39 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class TowerBase : MonoBehaviour, IClickable, ISelectable
+public class TowerBase : BuildingBase
 {
     [Header("References")]
-    [SerializeField] public Transform _front;
-    [SerializeField] private GameObject _ammo;
-    [SerializeField] private GameObject _towerModel;
+    [SerializeField] protected Transform _front;
+    [SerializeField] protected GameObject _ammo;
 
     [Header("Firing")]
-    [SerializeField] private float _fireAngle = 90f;
-    [SerializeField] private float _fireRange = 5f;
-    [SerializeField] private float _fireRate = 1f;
-    [SerializeField] private ArcRange _rangeArc;
+    [SerializeField] protected float _fireAngle = 90f;
+    [SerializeField] protected float _fireRange = 5f;
+    [SerializeField] protected float _fireRate = 1f;
+    [SerializeField] protected int _damage = 0;
 
     [Header("Layers")]
     [SerializeField] private LayerMask _enemyLayer;
 
     private float _fireCooldown;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
         _fireCooldown -= Time.deltaTime;
 
-        Transform target = GetTargetInRange();
 
-        if (target != null && _fireCooldown <= 0f)
+        if (_fireCooldown <= 0f)
         {
-            FireAt(target);
-            _fireCooldown = 1f / _fireRate;
+            Transform target = GetTargetInRange();
+            if(target != null){
+                FireAt(target);
+                _fireCooldown = 1f / _fireRate;
+            }
         }
+        
     }
 
     Transform GetTargetInRange()
@@ -69,56 +66,16 @@ public class TowerBase : MonoBehaviour, IClickable, ISelectable
 
     private void FireAt(Transform target)
     {
-        Debug.Log("Firing");
-        Instantiate(_ammo, _front.position, _front.rotation).GetComponent<AmmoBase>().Initialize(target);
+        Instantiate(_ammo, _front.position, _front.rotation).GetComponent<AmmoBase>().Initialize(target, _damage);
     }
 
-    public void RotateLeft()
+    public override void OnSelect()
     {
-        Debug.Log("_front.forward at spawn: " + _front.forward);
-        Debug.Log("_towerModel.forward at spawn: " + _towerModel.transform.forward);
-        _towerModel.transform.rotation *= Quaternion.Euler(0f, -30f, 0f);
+        UIManager.instance.OpenUpgradeMenu(this);
     }
 
-    public void RotateRight()
+    public override void OnDeselect()
     {
-        Debug.Log("_front.forward at spawn: " + _front.forward);
-        Debug.Log("_towerModel.forward at spawn: " + _towerModel.transform.forward);
-        _towerModel.transform.rotation *= Quaternion.Euler(0f, 30f, 0f);
-    }
-
-    public void OnClicked()
-    {
-        SelectionManager.instance.Select(this);
-    }
-
-    public void OnSelect()
-    {
-        if (_rangeArc != null)
-        {
-            _rangeArc.gameObject.SetActive(true);
-
-            // Update arc to match our firing parameters
-            _rangeArc.SetArc(_fireRange, _fireAngle);
-
-            // Rotate the arc to match the tower's forward direction
-            //_rangeArc.transform.rotation = Quaternion.LookRotation(_front.forward, Vector3.up);
-
-            //Fade it in
-            _rangeArc.FadeIn();
-        }
-
-        UIManager.instance.OpenTowerMenu();
-    }
-
-    public void OnDeselect()
-    {
-            Debug.Log("Disabling Arc");
-        if (_rangeArc != null)
-        {
-            _rangeArc.gameObject.SetActive(false);
-        }
-
         UIManager.instance.CloseMenu();
     }
 }

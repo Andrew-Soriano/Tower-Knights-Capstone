@@ -8,25 +8,26 @@ public enum EnemyType
 
 public enum DamageType
 {
-    Pierce
+    Pierce,
+    Fire
 }
 
 public class EnemyStats
 {
     private int _maxHP;
+    private float _speed;
 
     private Dictionary<DamageType, float> _damageResistances = new Dictionary<DamageType, float>();
 
     public Dictionary<DamageType, float> Resistances { get => _damageResistances;}
+    public int MaxHP { get => _maxHP; }
+    public float Speed { get => _speed; }
 
-    public EnemyStats(int HP, float resist_pierce)
+
+    public EnemyStats(int HP, float Speed, float resist_pierce)
     {
         _maxHP = HP;
+        _speed = Speed;
         _damageResistances[DamageType.Pierce] = Mathf.Clamp(resist_pierce, 0f, 1f);
-    }
-
-    public int Damage(DamageType type, int damage)
-    {
-        return (int)(1f - _damageResistances[type] * damage);
     }
 }

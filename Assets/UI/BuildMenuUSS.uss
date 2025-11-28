@@ -205,5 +205,13 @@
 .hover-menu-description {
     color: white;
     white-space: normal;
-    -unity-text-overflow-position: wrap;
+}
+
+.hover-cost-icons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }

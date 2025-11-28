@@ -101,14 +101,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerArcher
   _buildingModel: {fileID: 4641979299603542563}
+  _defaultMode: 0
+  id: 0
   _icon1: {fileID: 21300000, guid: 46f7498daa0350a46b6d4ff78a2f9b69, type: 3}
   _icon2: {fileID: 21300000, guid: 834ace449590c444697e40cb234d34ea, type: 3}
   _icon3: {fileID: 21300000, guid: 236d64738015c5f4fae16ce87b78c112, type: 3}
   _icon4: {fileID: 21300000, guid: a1f165236a492584bbe31ce66e115afa, type: 3}
   _name1: Shoot Speed
-  _name2: Shoot Damage
+  _name2: Shot Damage
   _name3: Slow Enemy
-  _name4: FIre Arrows
+  _name4: Fire Arrows
   _description1: Increase the speed of arrows fired per second.
   _description2: Arrows deal more damage per shot.
   _description3: Arrows slow enemies that they hit.
@@ -118,6 +120,7 @@ MonoBehaviour:
   _fireAngle: 180
   _fireRange: 10
   _fireRate: 1
+  _damage: 0
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -352,8 +355,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef662074591300146afcd54411732be8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2898179160473748998}
   m_SourcePrefab: {fileID: 100100000, guid: ef662074591300146afcd54411732be8, type: 3}
+--- !u!1 &8557273964264900496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ef662074591300146afcd54411732be8, type: 3}
+  m_PrefabInstance: {fileID: 8791275532977732289}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2898179160473748998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8557273964264900496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e4816d212ea4046ac3a7debb9146a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneTileTexture
+  _summer: {fileID: 2800000, guid: d218d1470da7c8b42a6d5ae9b4084d37, type: 3}
+  _fall: {fileID: 2800000, guid: f59ea08121b81f94097a4b8e2325437b, type: 3}
+  _winter: {fileID: 2800000, guid: f1de4178142db764a8e264d0e25e0c98, type: 3}
+  _spring: {fileID: 2800000, guid: b88409593ca7e1a459b93d0d851fcf28, type: 3}
 --- !u!4 &9046143929199959338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef662074591300146afcd54411732be8, type: 3}

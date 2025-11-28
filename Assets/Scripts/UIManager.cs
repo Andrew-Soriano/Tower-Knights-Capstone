@@ -41,8 +41,8 @@ public class UIManager : MonoBehaviour
     private Label _hoverMenuName;
     private Label _hoverMenuDescription;
     private Dictionary<VisualElement, EventCallback<PointerEnterEvent>> _hoverEnterCallbacks = new ();
-
     private Dictionary<VisualElement, EventCallback<PointerLeaveEvent>> _hoverLeaveCallbacks = new ();
+    public Button HoveredButton { get; private set; }
 
 
     //Castle Menu
@@ -119,10 +119,10 @@ public class UIManager : MonoBehaviour
         };
         _upgradeButtons = new Dictionary<int, UIBuildingActionButton>
         {
-            { 0, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton1")) },
-            { 1, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton2")) },
-            { 2, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton3")) },
-            { 3, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton4")) }
+            { 0, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton1"), null) },
+            { 1, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton2"), null) },
+            { 2, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton3"), null) },
+            { 3, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton4"), null) }
         };
         _hoverMenu = Q<VisualElement>("UpgradeHoverMenu", upgradeMenu);
         _hoverMenu.style.display = DisplayStyle.None;
@@ -223,17 +223,34 @@ public class UIManager : MonoBehaviour
     public void PopulateUpgradeMenu(IBuildingActions building)
     {
         List<BuildingActionData> actions = building.GetActions();
+        Dictionary<int, Resources> upgradeData = building.GetUpgradeData();
 
         for (int i = 0; i < _upgradeButtons.Count; i++)
         {
             if (i < actions.Count)
             {
-                _upgradeButtons[i].SetData(actions[i]);
+                var action = actions[i];
+                UpgradeType type = TowerData.MapStringToUpgradeType(action.name);
+                int currentLevel = building.GetCurrentUpgradeLevel(type);
+
+                Resources cost = TowerData.GetUpgradeCost(building.ID, type, currentLevel);
+
+                if (cost == null)
+                {
+                    _upgradeButtons[i].button.SetEnabled(false);
+                    _upgradeButtons[i].button.tooltip = "Max Level Reached";
+                }
+                else
+                {
+                    _upgradeButtons[i].button.SetEnabled(true);
+                    _upgradeButtons[i].SetData(action, cost);
+                }
+
                 _upgradeButtons[i].button.style.display = DisplayStyle.Flex;
             }
             else
             {
-                _upgradeButtons[i].button.style.display = DisplayStyle.None; // hide unused buttons
+                _upgradeButtons[i].button.style.display = DisplayStyle.None;
             }
         }
     }
@@ -276,18 +293,86 @@ public class UIManager : MonoBehaviour
 
     private void ShowHoverMenu(VisualElement button, UIBuildingActionButton actionButton)
     {
-        if (actionButton == null || actionButton.Data == null) return;
+        if (actionButton == null || actionButton.BuildingData == null) return;
 
-        // Set text from the building action
-        _hoverMenuName.text = actionButton.Data.name;
-        _hoverMenuDescription.text = actionButton.Data.description;
+        HoveredButton = actionButton.button;
+
+        var data = actionButton.BuildingData;
+
+        _hoverMenuName.text = actionButton.BuildingData.name;
+        _hoverMenuDescription.text = actionButton.BuildingData.description;
+
+        PopulateHoverCost(actionButton.upgradeCost);
 
         _hoverMenu.style.display = DisplayStyle.Flex;
     }
 
     private void HideHoverMenu()
     {
+        HoveredButton = null;
         _hoverMenu.style.display = DisplayStyle.None;
+    }
+
+    public void PopulateHoverCost(Resources cost)
+    {
+        if (cost == null)
+        {
+            Debug.LogError("PopulateHoverCost received NULL cost!");
+            return;
+        }
+        var container = _hoverMenu.Q<VisualElement>("HoverCostIcons");
+        container.Clear();
+
+        foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+        {
+            int amount = cost.GetAmount(type);
+            if (amount <= 0)
+                continue;
+
+            // Cost group container
+            var group = new VisualElement();
+            group.style.flexDirection = FlexDirection.Row;
+            group.style.alignItems = Align.Center;
+            group.style.marginRight = 6;
+
+            // Resource icon
+            var icon = new VisualElement();
+            icon.style.width = 20;
+            icon.style.height = 20;
+            icon.style.backgroundImage = new StyleBackground(GetResourceIcon(type));
+            icon.style.marginRight = 2;
+
+            // Amount
+            var label = new Label(amount.ToString("D2"));
+            label.style.fontSize = 12;
+            label.style.unityFontStyleAndWeight = FontStyle.Bold;
+            label.style.color = Color.white;
+
+            group.Add(icon);
+            group.Add(label);
+            container.Add(group);
+        }
+    }
+
+    public void RefreshHoverText(string name, string description)
+    {
+        _hoverMenuName.text = name;
+        _hoverMenuDescription.text = description;
+    }
+
+    private Texture2D GetResourceIcon(ResourceType type)
+    {
+        return type switch
+        {
+            ResourceType.Wood => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Wood"),
+            ResourceType.Planks => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Planks"),
+            ResourceType.Stone => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Stone"),
+            ResourceType.Bricks => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Bricks"),
+            ResourceType.Ore => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Ore"),
+            ResourceType.Metal => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Metal"),
+            ResourceType.Parts => UnityEngine.Resources.Load<Texture2D>("Icons/Resources/Icon_Parts"),
+            _ => null
+        };
     }
 
     public void OpenCastleMenu()

@@ -107,6 +107,10 @@
                 <ui:VisualElement name="UpgradeHoverMenu" class="hover-menu" style="display: flex; left: -73%; width: 70%; height: 120%;">
                     <ui:Label name="UpgradeHoverName" text="Upgrade Name" class="hover-menu-name" style="font-size: 16px;" />
                     <ui:Label name="UpgradeHoverDescription" text="Description goes here" class="hover-menu-description" style="flex-wrap: wrap;" />
+                    <ui:VisualElement name="HoverCostGroup" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; position: absolute; top: 80%;">
+                        <ui:Label text="Cost:" name="HoverCostLabel" style="color: rgb(255, 255, 255);" />
+                        <ui:VisualElement name="HoverCostIcons" class="hover-cost-icons" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

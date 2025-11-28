@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class BuildableTile : MonoBehaviour, IClickable, ISelectable
 {
@@ -10,17 +12,6 @@ public class BuildableTile : MonoBehaviour, IClickable, ISelectable
         _switchMode(_defaultMode);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     protected void _switchMode(int mode)
     {
         _currentMode = mode;

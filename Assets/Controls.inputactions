@@ -75,7 +75,7 @@
                     "id": "d93b52f4-ca5d-422f-9e3f-a40020b31ef9",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -238,7 +238,7 @@
                     "name": "",
                     "id": "63e66f4f-30e9-4d43-96de-e4bda3f0bc8b",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "LMB",
@@ -266,7 +266,7 @@
                     "id": "1dff2c54-cf8a-4d89-88e2-73cf8a392826",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -295,7 +295,7 @@
                     "name": "",
                     "id": "48b6fa8c-c953-473d-b0ff-33a6339716a8",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Click",

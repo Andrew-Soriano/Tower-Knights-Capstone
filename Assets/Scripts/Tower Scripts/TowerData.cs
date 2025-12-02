@@ -55,6 +55,15 @@ public class TowerData : ScriptableObject
         return null;
     }
 
+    public static List<Resources> GetUpgradeLevelsCosts(towerID id, UpgradeType type)
+    {
+        return id switch
+        {
+            towerID.Archer => ArcherUpgrades[type],
+            _ => throw new System.ArgumentException($"Unknown towerID: {id}")
+        };
+    }
+
     public static int GetMaxLevels(towerID id, UpgradeType type)
     {
         if (id == towerID.Archer)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -20,46 +21,72 @@ public class BuildingActionData
         this.action = action;
     }
 }
+
+[System.Serializable]
+public class BuildingUpgradeAction
+{
+    public string name;
+    public string description;
+    public Sprite icon;
+    public List<Resources> levelCosts;
+    public int maxLevel => levelCosts.Count;
+
+    public int CurrentLevel { get; set; } = 0;
+
+    public Action applyEffect;
+}
+
 public class UIBuildingActionButton
 {
     public Button button;
     public VisualElement icon;
-    public Resources upgradeCost;
-    public BuildingActionData BuildingData { get; private set; }
+    public BuildingUpgradeAction action;
 
-    public UIBuildingActionButton(VisualElement root, Resources data)
+    private BuildingBase _building;
+    private int _index;
+
+    public UIBuildingActionButton(VisualElement root)
     {
         button = root.Q<Button>("Button");
         icon = root.Q<VisualElement>("Icon");
-        upgradeCost = data;
     }
 
-    public void SetData(BuildingActionData data, Resources cost)
+    public void Setup(BuildingBase building, int index)
     {
-        BuildingData = data;
+        _building = building;
+        _index = index;
+        action = building.actions[index];
 
-        if (data.icon != null)
-            icon.style.backgroundImage = new StyleBackground(data.icon);
+        button.clicked -= OnClick; //Make sure any previous instance is removed
+        button.clicked += OnClick;
 
-        // Clear old action
-        if (button.userData is Action oldAction)
-            button.clicked -= oldAction;
+        if (action.icon != null && action.icon.texture != null)
+            icon.style.backgroundImage = new StyleBackground(action.icon.texture);
+        else
+            Debug.LogError($"Action '{action?.name}' has no icon or texture!");
+    }
 
-        button.userData = data.action;
-
-        if (data.action != null)
-            button.clicked += data.action;
-
-        upgradeCost = cost;
-
-        if (UIManager.instance != null &&
-        UIManager.instance.HoveredButton == button)
+    private void OnClick()
+    {
+        if (_building.TryUpgrade(_index))
         {
-            UIManager.instance.PopulateHoverCost(upgradeCost);
-            UIManager.instance.RefreshHoverText(BuildingData.name, BuildingData.description);
+            UIManager.instance.RefreshUpgradeMenu(_building);
+        }
+        else
+        {
+            UIManager.instance.ShowUpgradeError(_building.GetMissingResources(_building.actions[_index].levelCosts[_index]));
         }
     }
+
+    public void UpdateDisplay(BuildingUpgradeAction action)
+    {
+        icon.style.backgroundImage = new StyleBackground(action.icon.texture);
+
+        this.action = action;
+    }
 }
+
+
 
 public interface IBuildingActions
 {
@@ -77,6 +104,9 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
     [SerializeField] protected towerID id;
     [SerializeField] private Dictionary<int, Resources> _upgradeData;
     private Dictionary<UpgradeType, int> _currentUpgradeLevels = new();
+
+    public BuildingUpgradeAction[] actions;
+    protected Resources Stockpile => CastleController.instance.stockpile;
 
     public Dictionary<int, Resources> GetUpgradeData() => _upgradeData;
     public List<BuildingActionData> GetActions() => _actions;
@@ -106,6 +136,40 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
             new BuildingActionData(_name2, _description2, _icon2),
             new BuildingActionData(_name3, _description3, _icon3),
             new BuildingActionData(_name4, _description4, _icon4)
+        };
+
+        actions = new BuildingUpgradeAction[4];
+
+        actions[0] = new BuildingUpgradeAction
+        {
+            name = _name1,
+            description = _description1,
+            icon = _icon1,
+            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name1))
+        };
+
+        actions[1] = new BuildingUpgradeAction
+        {
+            name = _name2,
+            description = _description2,
+            icon = _icon2,
+            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name2))
+        };
+
+        actions[2] = new BuildingUpgradeAction
+        {
+            name = _name3,
+            description = _description3,
+            icon = _icon3,
+            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name3))
+        };
+
+        actions[3] = new BuildingUpgradeAction
+        {
+            name = _name4,
+            description = _description4,
+            icon = _icon4,
+            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name4))
         };
 
         foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
@@ -140,5 +204,41 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
     {
         if (_currentUpgradeLevels[type] < TowerData.GetMaxLevels(id, type))
             _currentUpgradeLevels[type]++;
+    }
+
+    public bool TryUpgrade(int index)
+    {
+        var action = actions[index];
+
+        // Prevent going past max
+        if (action.CurrentLevel >= action.maxLevel)
+            return false;
+
+        Resources cost = action.levelCosts[action.CurrentLevel];
+
+        // Not enough resources?
+        if (!Stockpile.HasResources(cost))
+            return false;
+
+        // Apply effect
+        action.applyEffect?.Invoke();
+
+        // Increase level
+        action.CurrentLevel++;
+
+        return true;
+    }
+
+    public Resources GetCost(int index)
+    {
+        var action = actions[index];
+        if (action.CurrentLevel >= action.maxLevel)
+            return null;
+        return action.levelCosts[action.CurrentLevel];
+    }
+
+    public Resources GetMissingResources(Resources cost)
+    {
+        return Stockpile.MissingResources(cost);
     }
 }

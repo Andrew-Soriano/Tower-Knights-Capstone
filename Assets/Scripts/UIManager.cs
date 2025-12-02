@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -9,6 +10,7 @@ using UnityEngine.UIElements;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+    private bool ignoreNextUIInput = false;
 
     private VisualElement root;
     private VisualElement currentMenu;
@@ -25,7 +27,6 @@ public class UIManager : MonoBehaviour
     public VisualElement buildMenu;
     private TabView _buildTabView;
     private Dictionary<towerID, (Button button, Dictionary<ResourceType, Label> resourceLabels, Resources cost)> _buildTowers;
-    private Dictionary<towerID, Action> _buildTowerActions;
 
     //Resource Builder Menu
     public VisualElement resourceMenu;
@@ -34,7 +35,6 @@ public class UIManager : MonoBehaviour
     //Upgrade Menu
     public VisualElement upgradeMenu;
     private Dictionary<RotateDirection, Button> _rotateButtons;
-    private Dictionary<RotateDirection, Action> _rotateActions;
     private enum RotateDirection { Left, Right }
     private Dictionary<int, UIBuildingActionButton> _upgradeButtons;
     private VisualElement _hoverMenu;
@@ -42,11 +42,14 @@ public class UIManager : MonoBehaviour
     private Label _hoverMenuDescription;
     private Dictionary<VisualElement, EventCallback<PointerEnterEvent>> _hoverEnterCallbacks = new ();
     private Dictionary<VisualElement, EventCallback<PointerLeaveEvent>> _hoverLeaveCallbacks = new ();
+    private Dictionary<Button, Action> _safeClickHandlers = new();
     public Button HoveredButton { get; private set; }
 
 
     //Castle Menu
     public VisualElement castleMenu;
+
+    private Coroutine _flashCoroutine;
 
     private InputAction _clickAction;
     private InputAction _pointAction;
@@ -119,10 +122,10 @@ public class UIManager : MonoBehaviour
         };
         _upgradeButtons = new Dictionary<int, UIBuildingActionButton>
         {
-            { 0, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton1"), null) },
-            { 1, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton2"), null) },
-            { 2, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton3"), null) },
-            { 3, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton4"), null) }
+            { 0, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton1")) },
+            { 1, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton2")) },
+            { 2, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton3")) },
+            { 3, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton4")) }
         };
         _hoverMenu = Q<VisualElement>("UpgradeHoverMenu", upgradeMenu);
         _hoverMenu.style.display = DisplayStyle.None;
@@ -141,34 +144,31 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _buildTowerActions = new Dictionary<towerID, Action>();
+        _safeClickHandlers.Clear();
+        _hoverEnterCallbacks.Clear();
+        _hoverLeaveCallbacks.Clear();
 
+        //Build buttons
         foreach (var kvp in _buildTowers)
         {
             towerID id = kvp.Key;
-            Action handler = () => OnBuildTowerPressed(id);
-            _buildTowerActions[id] = handler;
-            kvp.Value.button.clicked += handler;
+            RegisterSafeClick(kvp.Value.button, () => OnBuildTowerPressed(id));
         }
 
-        _resourceButton.clicked += OnBuildResourcePress;
-        _nextRoundButton.clicked += OnNextRoundButtonClicked;
+        RegisterSafeClick(_resourceButton, OnBuildResourcePress);      //Resource Button
+        RegisterSafeClick(_nextRoundButton, OnNextRoundButtonClicked); //Next Round Button
 
-        _rotateActions = new Dictionary<RotateDirection, Action>();
+        //Rotate buttons
         foreach (var kvp in _rotateButtons)
         {
             RotateDirection dir = kvp.Key;
-            Action handler = () => OnTowerRotateClicked(dir);
-            _rotateActions[dir] = handler;
-            kvp.Value.clicked += handler;
+            RegisterSafeClick(kvp.Value, () => OnTowerRotateClicked(dir));
         }
 
+        //Upgrade Buttons
         foreach (var kvp in _upgradeButtons)
         {
             var upgradeButton = kvp.Value.button;
-
-            // Capture local references for lambda
-            int index = kvp.Key;
 
             EventCallback<PointerEnterEvent> enterCallback = evt => ShowHoverMenu(upgradeButton, kvp.Value);
             EventCallback<PointerLeaveEvent> leaveCallback = evt => HideHoverMenu();
@@ -179,30 +179,22 @@ public class UIManager : MonoBehaviour
 
             _hoverEnterCallbacks[upgradeButton] = enterCallback;
             _hoverLeaveCallbacks[upgradeButton] = leaveCallback;
+
+            RegisterSafeClick(upgradeButton, () => kvp.Value.action?.applyEffect?.Invoke());
         }
     }
 
     private void OnDisable()
     {
-        //Build Menu Events
-        foreach (var kvp in _buildTowers)
+        //Remove all SafeButtonClicks
+        foreach (var kvp in _safeClickHandlers)
         {
-            towerID id = kvp.Key;
-            kvp.Value.button.clicked -= _buildTowerActions[id];
+            kvp.Key.clicked -= kvp.Value;
         }
 
-        //Resource Menu Events
-        _resourceButton.clicked -= OnBuildResourcePress;
+        _safeClickHandlers.Clear();
 
-        //Tower Menu Events
-        foreach (var kvp in _rotateButtons)
-        {
-            kvp.Value.clicked -= _rotateActions[kvp.Key];
-        }
-
-        //Statusbar Events
-        _nextRoundButton.clicked -= OnNextRoundButtonClicked;
-
+        //Remove hovers
         foreach (var kvp in _upgradeButtons)
         {
             var button = kvp.Value.button;
@@ -213,6 +205,24 @@ public class UIManager : MonoBehaviour
             if (_hoverLeaveCallbacks.TryGetValue(button, out var leaveCb))
                 button.UnregisterCallback(leaveCb);
         }
+
+        _hoverEnterCallbacks.Clear();
+        _hoverLeaveCallbacks.Clear();
+
+        //Stop active flash coroutines
+        if (_flashCoroutine != null)
+        {
+            StopCoroutine(_flashCoroutine);
+            _flashCoroutine = null;
+        }
+    }
+    private void RegisterSafeClick(Button button, Action action)
+    {
+        if (_safeClickHandlers.TryGetValue(button, out var existing))
+            button.clicked -= existing;
+
+        _safeClickHandlers[button] = () => SafeButtonClick(action);
+        button.clicked += _safeClickHandlers[button];
     }
 
     private T Q<T>(string name, VisualElement parent = null) where T : VisualElement
@@ -220,33 +230,19 @@ public class UIManager : MonoBehaviour
         return (parent ?? root).Q<T>(name);
     }
 
-    public void PopulateUpgradeMenu(IBuildingActions building)
+    public void PopulateUpgradeMenu(BuildingBase tower)
     {
-        List<BuildingActionData> actions = building.GetActions();
-        Dictionary<int, Resources> upgradeData = building.GetUpgradeData();
+        var actions = tower.actions;
 
         for (int i = 0; i < _upgradeButtons.Count; i++)
         {
-            if (i < actions.Count)
+            if (i < actions.Length)
             {
-                var action = actions[i];
-                UpgradeType type = TowerData.MapStringToUpgradeType(action.name);
-                int currentLevel = building.GetCurrentUpgradeLevel(type);
+                var button = _upgradeButtons[i];
+                button.button.style.display = DisplayStyle.Flex;
 
-                Resources cost = TowerData.GetUpgradeCost(building.ID, type, currentLevel);
-
-                if (cost == null)
-                {
-                    _upgradeButtons[i].button.SetEnabled(false);
-                    _upgradeButtons[i].button.tooltip = "Max Level Reached";
-                }
-                else
-                {
-                    _upgradeButtons[i].button.SetEnabled(true);
-                    _upgradeButtons[i].SetData(action, cost);
-                }
-
-                _upgradeButtons[i].button.style.display = DisplayStyle.Flex;
+                button.Setup(tower, i);
+                button.UpdateDisplay(actions[i]);
             }
             else
             {
@@ -255,12 +251,43 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    public void RefreshUpgradeMenu(BuildingBase building)
+    {
+        var actions = building.actions;
+
+        for (int i = 0; i < actions.Length; i++)
+            _upgradeButtons[i].UpdateDisplay(actions[i]);
+    }
+
+    public void ShowUpgradeError(Resources missing)
+    {
+        FlashMissingLabel(missing);
+    }
+
+
     public void OpenMenu(VisualElement menu)
     {
         if (currentMenu != null)
             CloseMenu();
         currentMenu = menu;
         currentMenu.style.display = DisplayStyle.Flex;
+
+        _input.SwitchCurrentActionMap("Menu");
+
+        // Ignore any UI click on this frame
+        ignoreNextUIInput = true;
+    }
+
+    private void SafeButtonClick(Action action)
+    {
+        if (ignoreNextUIInput)
+        {
+            ignoreNextUIInput = false; // consume the “opening click”
+            return;
+        }
+
+        action?.Invoke();
     }
 
     public void OpenBuildMenu()
@@ -285,7 +312,7 @@ public class UIManager : MonoBehaviour
         _resourceButton.text = tile.tileName;
     }
 
-    public void OpenUpgradeMenu(IBuildingActions building)
+    public void OpenUpgradeMenu(BuildingBase building)
     {
         PopulateUpgradeMenu(building);
         OpenMenu(upgradeMenu);
@@ -293,16 +320,16 @@ public class UIManager : MonoBehaviour
 
     private void ShowHoverMenu(VisualElement button, UIBuildingActionButton actionButton)
     {
-        if (actionButton == null || actionButton.BuildingData == null) return;
+        if (actionButton == null || actionButton.action == null) return;
 
         HoveredButton = actionButton.button;
 
-        var data = actionButton.BuildingData;
+        var upgrade = actionButton.action;
 
-        _hoverMenuName.text = actionButton.BuildingData.name;
-        _hoverMenuDescription.text = actionButton.BuildingData.description;
+        _hoverMenuName.text = upgrade.name;
+        _hoverMenuDescription.text = upgrade.description;
 
-        PopulateHoverCost(actionButton.upgradeCost);
+        PopulateHoverCost(upgrade.CurrentLevel >= upgrade.maxLevel ? null : upgrade.levelCosts[upgrade.CurrentLevel], upgrade);
 
         _hoverMenu.style.display = DisplayStyle.Flex;
     }
@@ -313,7 +340,7 @@ public class UIManager : MonoBehaviour
         _hoverMenu.style.display = DisplayStyle.None;
     }
 
-    public void PopulateHoverCost(Resources cost)
+    public void PopulateHoverCost(Resources cost, BuildingUpgradeAction action)
     {
         if (cost == null)
         {
@@ -386,7 +413,8 @@ public class UIManager : MonoBehaviour
         {
             currentMenu.style.display = DisplayStyle.None;
             currentMenu = null;
-            
+            _input.SwitchCurrentActionMap("Camera");
+
             // Deselect current selectable
             if (SelectionManager.instance.GetCurrent() != null)
                 SelectionManager.instance.Deselect();
@@ -429,8 +457,8 @@ public class UIManager : MonoBehaviour
     }
     public void FlashLabel(Label label, Color color, float duration = 0.25f, int repeat = 3)
     {
-        StopCoroutine(FlashCoroutine(label, duration, repeat, color));
-        StartCoroutine(FlashCoroutine(label, duration, repeat, color));
+        StopCoroutine(_flashCoroutine);
+        _flashCoroutine = StartCoroutine(FlashCoroutine(label, duration, repeat, color));
     }
 
     private void FlashMissingLabel(Resources missing)

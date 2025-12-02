@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Collections.AllocatorManager;
 using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
@@ -34,9 +36,11 @@ public class CameraController : MonoBehaviour
     private Vector2 dragInput;
     private bool rmb;
     private bool mmb;
-    private bool lmb;
+    private bool _ignoreNextClick = false;
 
     Vector3 velocity;
+
+    public static CameraController instance;
 
     public void OnMove(InputAction.CallbackContext ctx)
         => moveInput = ctx.ReadValue<Vector2>();
@@ -59,7 +63,13 @@ public class CameraController : MonoBehaviour
     public void OnMMB(InputAction.CallbackContext ctx)
         => mmb = ctx.ReadValueAsButton();
     public void OnLMB(InputAction.CallbackContext ctx)
-        => lmb = ctx.ReadValueAsButton();
+    {
+        if (ctx.performed)
+        {
+            HandleClick();
+        }
+    }
+
 
     private void Update()
     {
@@ -70,8 +80,16 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize target zoom to current camera zoom
-        targetZoom = cam.orthographic ? cam.orthographicSize : cam.transform.localPosition.y;
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+            // Initialize target zoom to current camera zoom
+            targetZoom = cam.orthographic ? cam.orthographicSize : cam.transform.localPosition.y;
         targetYaw = transform.eulerAngles.y;
     }
 
@@ -183,6 +201,13 @@ public class CameraController : MonoBehaviour
 
     public void HandleClick()
     {
+        if (_ignoreNextClick)
+            return;
+
+        if (UnityEngine.EventSystems.EventSystem.current != null &&
+            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            return;
+
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -193,5 +218,16 @@ public class CameraController : MonoBehaviour
                 clickable.OnClicked();
             }
         }
+    }
+    public void IgnoreNextClick()
+    {
+        _ignoreNextClick = true;
+        StartCoroutine(ResetIgnoreClick());
+    }
+
+    private IEnumerator ResetIgnoreClick()
+    {
+        yield return null; // wait 1 frame
+        _ignoreNextClick = false;
     }
 }

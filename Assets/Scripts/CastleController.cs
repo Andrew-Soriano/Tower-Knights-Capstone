@@ -7,6 +7,9 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
 
     public Resources stockpile = new Resources();
 
+    [SerializeField] private int _maxHP;
+    [SerializeField] private int _HP;
+
     private void Awake()
     {
         //Singleton pattern
@@ -17,11 +20,14 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         {
             Destroy(gameObject);
         }
+
+        _HP = _maxHP;
     }
 
     private void Start()
     {
         UIManager.instance.RefreshResourceUI(stockpile);
+        UIManager.instance.RefreshCastleHP(_HP, _maxHP);
     }
 
     public void OnClicked()
@@ -39,8 +45,12 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         UIManager.instance.CloseMenu();
     }
 
-    internal void trigger(int id)
+    public void trigger(EnemyController other)
     {
+        _HP -= other.Damage;
+
+        UIManager.instance.RefreshCastleHP(_HP, _maxHP);
+        UIManager.instance.FlashCastleHP();
     }
 
     public bool BuildTower(TowerTile tile, towerID id)

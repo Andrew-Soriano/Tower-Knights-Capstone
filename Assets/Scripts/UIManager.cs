@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     private bool ignoreNextUIInput = false;
 
     private VisualElement root;
-    private VisualElement currentMenu;
+    public VisualElement currentMenu;
 
 
     //Status Bar
@@ -21,12 +21,17 @@ public class UIManager : MonoBehaviour
     private Button _nextRoundButton;
     private Label _roundCountText;
     private Dictionary<ResourceType, Label> _resourceLabels;
+    private Label _castleHPLabel;
     public static event Action nextRoundClicked;
 
     //Build Menu
     public VisualElement buildMenu;
+    public VisualElement towerGrid;
     private TabView _buildTabView;
     private Dictionary<towerID, (Button button, Dictionary<ResourceType, Label> resourceLabels, Resources cost)> _buildTowers;
+    private VisualElement _buildHoverMenu;
+    private Label _buildHoverName;
+    private Label _buildHoverDescription;
 
     //Resource Builder Menu
     public VisualElement resourceMenu;
@@ -44,16 +49,14 @@ public class UIManager : MonoBehaviour
     private Dictionary<VisualElement, EventCallback<PointerLeaveEvent>> _hoverLeaveCallbacks = new ();
     private Dictionary<Button, Action> _safeClickHandlers = new();
     public Button HoveredButton { get; private set; }
+    private Button _targetModeButton;
 
 
     //Castle Menu
     public VisualElement castleMenu;
 
-    private Coroutine _flashCoroutine;
+    private Dictionary<Label, Coroutine> _activeFlashes = new();
 
-    private InputAction _clickAction;
-    private InputAction _pointAction;
-    private InputAction _cancelAction;
     private PlayerInput _input;
 
     private void Awake()
@@ -72,6 +75,7 @@ public class UIManager : MonoBehaviour
         statusBar = root.Q<VisualElement>("StatusBar");
         _nextRoundButton = statusBar.Q<Button>("NextRoundButton");
         _roundCountText = statusBar.Q<Label>("RoundCount");
+        _castleHPLabel = statusBar.Q<Label>("HPCount");
         _resourceLabels = new Dictionary<ResourceType, Label>
         {
             { ResourceType.Wood, statusBar.Q<Label>("WoodCount") },
@@ -88,24 +92,48 @@ public class UIManager : MonoBehaviour
         buildMenu.style.display = DisplayStyle.None;
         _buildTabView = buildMenu.Q<TabView>("BuildTabView");
         _buildTabView.activeTab = _buildTabView.GetTab(0);
+        towerGrid = buildMenu.Q<VisualElement>("TowerGrid");
         _buildTowers = new Dictionary<towerID, (Button button, Dictionary<ResourceType, Label> resourceLabels, Resources cost)>();
-        foreach(towerID id in Enum.GetValues(typeof(towerID)))
+
+        foreach (towerID id in Enum.GetValues(typeof(towerID)))
         {
             Resources cost = TowerData.GetCosts(id);
-            Button button = Q<Button>($"Build{id}Button");
+
+            var towerGroup = buildMenu.Q<VisualElement>($"{id}Group") ?? buildMenu.Q<VisualElement>($"{id}");
+            if (towerGroup == null)
+            {
+                Debug.LogWarning($"UIManager: Could not find UI group for {id}");
+                continue;
+            }
+
+            var button = towerGroup.Q<Button>($"Build{id}Button");
+            if (button == null)
+            {
+                Debug.LogWarning($"UIManager: Could not find button for {id}");
+                continue;
+            }
             var labels = new Dictionary<ResourceType, Label>();
 
-            foreach(ResourceType type in Enum.GetValues(typeof(ResourceType)))
+            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
             {
-                if(cost.GetAmount(type) > 0)
+                if (cost.GetAmount(type) <= 0) continue;
+
+                var label = towerGroup.Q<Label>($"{id}{type}Count");
+                if (label != null)
                 {
-                    labels[type] = Q<Label>($"{id}{type}Count", buildMenu);
-                    labels[type].text = cost.GetAmount(type).ToString("D2");
+                    label.text = cost.GetAmount(type).ToString("D2");
+                    labels[type] = label;
                 }
             }
 
             _buildTowers[id] = (button, labels, cost);
         }
+
+        _buildHoverMenu = Q<VisualElement>("BuildHoverMenu", buildMenu);
+        _buildHoverName = Q<Label>("BuildHoverName", _buildHoverMenu);
+        _buildHoverDescription = Q<Label>("BuildHoverDescription", _buildHoverMenu);
+        _buildHoverMenu.style.display = DisplayStyle.None;
+
 
         //Resource Tile Menu Initialize
         resourceMenu = root.Q<VisualElement>("Resource");
@@ -127,6 +155,12 @@ public class UIManager : MonoBehaviour
             { 2, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton3")) },
             { 3, new UIBuildingActionButton(upgradeMenu.Q<VisualElement>("UpgradeButton4")) }
         };
+        _targetModeButton = new Button()
+        {
+            text = "Target Mode"
+        };
+        _targetModeButton.style.display = DisplayStyle.None;
+        upgradeMenu.Add(_targetModeButton);
         _hoverMenu = Q<VisualElement>("UpgradeHoverMenu", upgradeMenu);
         _hoverMenu.style.display = DisplayStyle.None;
         _hoverMenuName = Q<Label>("UpgradeHoverName", _hoverMenu);
@@ -136,10 +170,6 @@ public class UIManager : MonoBehaviour
         castleMenu = root.Q<VisualElement>("Castle");
 
         _input = GetComponent<PlayerInput>();
-
-        _pointAction = _input.actions["Point"];
-        _clickAction = _input.actions["Click"];
-        _cancelAction = _input.actions["Cancel"];
     }
 
     private void OnEnable()
@@ -153,6 +183,8 @@ public class UIManager : MonoBehaviour
         {
             towerID id = kvp.Key;
             RegisterSafeClick(kvp.Value.button, () => OnBuildTowerPressed(id));
+            kvp.Value.button.RegisterCallback<PointerEnterEvent>(evt => ShowBuildHoverMenu(id, kvp.Value.button));
+            kvp.Value.button.RegisterCallback<PointerLeaveEvent>(evt => HideBuildHoverMenu());
         }
 
         RegisterSafeClick(_resourceButton, OnBuildResourcePress);      //Resource Button
@@ -182,6 +214,9 @@ public class UIManager : MonoBehaviour
 
             RegisterSafeClick(upgradeButton, () => kvp.Value.action?.applyEffect?.Invoke());
         }
+        RegisterSafeClick(_targetModeButton, EnterTargetingMode);
+
+        EnemyBaseController.endOfRound += EndRoundUI;
     }
 
     private void OnDisable()
@@ -210,11 +245,12 @@ public class UIManager : MonoBehaviour
         _hoverLeaveCallbacks.Clear();
 
         //Stop active flash coroutines
-        if (_flashCoroutine != null)
-        {
-            StopCoroutine(_flashCoroutine);
-            _flashCoroutine = null;
-        }
+        foreach (var kvp in _activeFlashes)
+            StopCoroutine(kvp.Value);
+        
+        _activeFlashes.Clear();
+
+        EnemyBaseController.endOfRound -= EndRoundUI;
     }
     private void RegisterSafeClick(Button button, Action action)
     {
@@ -227,8 +263,75 @@ public class UIManager : MonoBehaviour
 
     private T Q<T>(string name, VisualElement parent = null) where T : VisualElement
     {
-        return (parent ?? root).Q<T>(name);
+        var element = (parent ?? root).Q<T>(name);
+        if (element == null)
+            Debug.LogError($"UIManager: Failed to find {typeof(T).Name} named '{name}' in {(parent != null ? parent.name : "root")}");
+        return element;
     }
+
+    private void ShowBuildHoverMenu(towerID id, VisualElement button)
+    {
+        var towerData = TowerData.GetTowerInfo(id); // Your struct/class containing name, desc, costs
+        _buildHoverName.text = towerData.name;
+        _buildHoverDescription.text = towerData.description;
+
+        // Populate costs
+        PopulateHoverCost(towerData.cost, null, _buildHoverMenu.Q<VisualElement>("BuildHoverCostIcons"));
+
+        _buildHoverMenu.style.display = DisplayStyle.Flex;
+
+        // Optional: position near button
+        var worldPos = button.worldBound.position;
+        _buildHoverMenu.style.left = worldPos.x;
+        _buildHoverMenu.style.top = worldPos.y + button.resolvedStyle.height;
+    }
+
+    private void HideBuildHoverMenu()
+    {
+        _buildHoverMenu.style.display = DisplayStyle.None;
+    }
+
+    // Overload of PopulateHoverCost to specify a container
+    private void PopulateHoverCost(Resources cost, BuildingUpgradeAction action, VisualElement container)
+    {
+        if (cost == null || container == null) return;
+
+        container.Clear();
+
+        foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+        {
+            int amount = cost.GetAmount(type);
+            if (amount <= 0) continue;
+
+            var group = new VisualElement { style = { flexDirection = FlexDirection.Row, alignItems = Align.Center, marginRight = 6 } };
+
+            var icon = new VisualElement
+            {
+                style =
+            {
+                width = 20,
+                height = 20,
+                backgroundImage = new StyleBackground(GetResourceIcon(type)),
+                marginRight = 2
+            }
+            };
+
+            var label = new Label(amount.ToString("D2"))
+            {
+                style =
+            {
+                fontSize = 12,
+                color = Color.white,
+                unityFontStyleAndWeight = FontStyle.Bold
+            }
+            };
+
+            group.Add(icon);
+            group.Add(label);
+            container.Add(group);
+        }
+    }
+
 
     public void PopulateUpgradeMenu(BuildingBase tower)
     {
@@ -277,6 +380,7 @@ public class UIManager : MonoBehaviour
 
         // Ignore any UI click on this frame
         ignoreNextUIInput = true;
+        StartCoroutine(DisarmButtonSafety());
     }
 
     private void SafeButtonClick(Action action)
@@ -287,7 +391,28 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        action?.Invoke();
+            action?.Invoke();
+    }
+
+    private IEnumerator DisarmButtonSafety()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        ignoreNextUIInput = false;
     }
 
     public void OpenBuildMenu()
@@ -316,6 +441,17 @@ public class UIManager : MonoBehaviour
     {
         PopulateUpgradeMenu(building);
         OpenMenu(upgradeMenu);
+        if (building is TowerCatapult)
+            _targetModeButton.style.display = DisplayStyle.Flex;
+        else
+            _targetModeButton.style.display = DisplayStyle.None;
+    }
+
+    private void EnterTargetingMode()
+    {
+        currentMenu.style.display = DisplayStyle.None;
+        currentMenu = null;
+        _input.SwitchCurrentActionMap("Camera");
     }
 
     private void ShowHoverMenu(VisualElement button, UIBuildingActionButton actionButton)
@@ -455,10 +591,20 @@ public class UIManager : MonoBehaviour
             label.text = amount.ToString("D3");
         }
     }
+
+    public void RefreshCastleHP(int currentHP, int maxHP)
+    {
+        if (_castleHPLabel != null)
+        {
+            _castleHPLabel.text = $"{currentHP}/{maxHP}";
+        }
+    }
+
     public void FlashLabel(Label label, Color color, float duration = 0.25f, int repeat = 3)
     {
-        StopCoroutine(_flashCoroutine);
-        _flashCoroutine = StartCoroutine(FlashCoroutine(label, duration, repeat, color));
+        if (_activeFlashes.TryGetValue(label, out Coroutine existing))
+            StopCoroutine(existing);
+        _activeFlashes[label] = StartCoroutine(FlashCoroutine(label, duration, repeat, color));
     }
 
     private void FlashMissingLabel(Resources missing)
@@ -482,6 +628,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void FlashCastleHP()
+    {
+        FlashLabel(_castleHPLabel, Color.red);
+    }
+
     private IEnumerator FlashCoroutine(Label label, float duration, int repeat, Color color)
     {
         Color originalColor = label.resolvedStyle.color;
@@ -492,6 +643,8 @@ public class UIManager : MonoBehaviour
             label.style.color = new StyleColor(originalColor);
             yield return new WaitForSeconds(duration);
         }
+
+        _activeFlashes.Remove(label);
     }
 
     private void OnBuildTowerPressed(towerID id)

@@ -1,16 +1,19 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 
 public class EnemyBaseController : MonoBehaviour
 {
+    public static event Action endOfRound;
     [Header("Path")]
     public SplineContainer path;
 
     [Header("Enemies")]
-    public List<GameObject> Enemies;
+    [SerializeField] EnemyWaves waves;
+    private List<GameObject> Enemies;
     public float defaultSpawnDelay = 0.3f;
 
     public int roundNum = 0;
@@ -28,12 +31,22 @@ public class EnemyBaseController : MonoBehaviour
         UIManager.nextRoundClicked -= StartRound;
     }
 
-    private System.Collections.IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
-        for (int i = 0; i < Enemies.Count; i++)
+        int i = 0;
+        var wave = waves.GetWave(roundNum - 1);
+
+        foreach(var segment in wave.segments)
         {
-            SpawnEnemy(i);
-            yield return new WaitForSeconds(defaultSpawnDelay);
+            for (int j = 0; j < segment.count; j++)
+            {
+                SpawnEnemy(i);
+                i++;
+                yield return new WaitForSeconds(segment.delay);
+            }
+
+            if (i > wave.enemies.Count)
+                break;
         }
 
         _spawnRoutine = null;
@@ -59,6 +72,9 @@ public class EnemyBaseController : MonoBehaviour
         {
             _enemiesSpawned = 0;
             _enemiesAlive = 0;
+            Enemies = (roundNum >= 0 && roundNum < waves.WaveCount && waves.GetWave(roundNum) != null)
+                ? waves.GetWave(roundNum).enemies
+                : Enemies;
             roundNum++;
             UIManager.instance.StartRoundUI(roundNum);
             _spawnRoutine = StartCoroutine(SpawnEnemies());
@@ -67,7 +83,7 @@ public class EnemyBaseController : MonoBehaviour
 
     private void EndRound()
     {
-        UIManager.instance.EndRoundUI();
+        endOfRound?.Invoke();
     }
 
     private void OnEnemyDied()

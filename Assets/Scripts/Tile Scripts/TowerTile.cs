@@ -5,6 +5,8 @@ using UnityEngine;
 public enum towerID
 {
     Archer,
+    Catapult,
+    Bomb,
     Sawmill
 }
 
@@ -12,6 +14,8 @@ public class TowerTile : BuildableTile
 {
     [Header("Tower Prefabs")]
     [SerializeField] private GameObject _ArcherTower;
+    [SerializeField] private GameObject _CatapultTower;
+    [SerializeField] private GameObject _BombTower;
 
     [Header("Crafting Prefabs")]
     [SerializeField] private GameObject _SawmillTower;
@@ -24,6 +28,12 @@ public class TowerTile : BuildableTile
         {
             case towerID.Archer:
                 tower = Instantiate(_ArcherTower, transform.position, Quaternion.identity);
+                break;
+            case towerID.Catapult:
+                tower = Instantiate(_CatapultTower, transform.position, Quaternion.identity);
+                break;
+            case towerID.Bomb:
+                tower = Instantiate(_BombTower, transform.position, Quaternion.identity);
                 break;
             case towerID.Sawmill:
                 tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);

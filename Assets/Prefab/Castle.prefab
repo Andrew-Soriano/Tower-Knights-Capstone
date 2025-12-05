@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3973741749268596852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4261958835383302066}
+  m_Layer: 0
+  m_Name: LightnignOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4261958835383302066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3973741749268596852}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.76, y: 5.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8164281396297948505}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5709833379321506499
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,8 @@ GameObject:
   - component: {fileID: 4417708439269460339}
   - component: {fileID: 3024124134610519241}
   - component: {fileID: 825076980223032936}
-  m_Layer: 0
+  - component: {fileID: 1471938842165200314}
+  m_Layer: 3
   m_Name: DeathTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,6 +128,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1471938842165200314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5709833379321506499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a51622f3e4b8b54d801ba591d69205a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightningStrike
+  _lightningPrefab: {fileID: 7180003552855532606, guid: 9189e24f19bbf874a86555e016ba5bc6, type: 3}
+  _startLightning: {fileID: 4261958835383302066}
+  _lightningDuration: 0.2
+  _lightningJaggedness: 0.5
+  _lightningSegments: 8
 --- !u!1 &8518216607726688566
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +185,7 @@ Transform:
   - {fileID: 1732156552417041272}
   - {fileID: 8852395200555785174}
   - {fileID: 4192304424714898101}
+  - {fileID: 4261958835383302066}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2455670116556704903
@@ -157,7 +207,9 @@ MonoBehaviour:
     bricks: 0
     ore: 0
     metal: 0
-    parts: 0
+    parts: 10
+  _maxHP: 100
+  _HP: 0
 --- !u!65 &2212350425845116393
 BoxCollider:
   m_ObjectHideFlags: 0

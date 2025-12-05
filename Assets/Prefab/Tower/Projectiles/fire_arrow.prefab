@@ -4929,9 +4929,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45733fe8d0880674fb3162b33377a9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerArrow
+  _type: 2
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   speed: 12
   rotateSpeed: 10
-  _damage: 10
 --- !u!65 &512040862822187139
 BoxCollider:
   m_ObjectHideFlags: 0

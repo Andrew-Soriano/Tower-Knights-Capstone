@@ -2,14 +2,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class BuildableTile : MonoBehaviour, IClickable, ISelectable
+public class BuildableTile : MonoBehaviour, IClickable, ISelectable, IArtilleryTarget
 {
     protected int _currentMode;
     [SerializeField] protected int _defaultMode;
 
+    [SerializeField] private Renderer _tileRenderer;
+    private Color originalColor;
+
+    public Vector3 WorldPosition { get => transform.position; }
+
     void Awake()
     {
         _switchMode(_defaultMode);
+        originalColor = _tileRenderer.material.color;
     }
 
     protected void _switchMode(int mode)
@@ -39,6 +45,16 @@ public class BuildableTile : MonoBehaviour, IClickable, ISelectable
                 child.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void Highlight(Color color)
+    {
+        _tileRenderer.material.color = color;
+    }
+
+    public void ResetHighlight()
+    {
+        _tileRenderer.material.color = originalColor;
     }
 
     public void OnClicked()

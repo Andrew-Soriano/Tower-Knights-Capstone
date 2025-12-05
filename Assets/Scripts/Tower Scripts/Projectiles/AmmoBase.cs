@@ -6,8 +6,9 @@ public abstract class AmmoBase : MonoBehaviour
     protected Vector3 _targetPosition;       //For firing at a target position
     protected bool _hasTransformTarget;
     [SerializeField] protected DamageType _type;
-
+    [SerializeField] protected LayerMask _enemyLayer;
     protected int _damage;
+
 
     public virtual void Initialize(Transform destination, int damage)
     {

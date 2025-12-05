@@ -75,7 +75,7 @@
                     "id": "d93b52f4-ca5d-422f-9e3f-a40020b31ef9",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -238,7 +238,7 @@
                     "name": "",
                     "id": "63e66f4f-30e9-4d43-96de-e4bda3f0bc8b",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "LMB",
@@ -252,24 +252,6 @@
             "id": "fe22d7d8-4554-4736-be33-abb2c01f5e41",
             "actions": [
                 {
-                    "name": "Point",
-                    "type": "Value",
-                    "id": "ee9836f3-6678-4bae-825a-7e96ffd87385",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Click",
-                    "type": "Button",
-                    "id": "1dff2c54-cf8a-4d89-88e2-73cf8a392826",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Cancel",
                     "type": "Button",
                     "id": "1a65e4fa-1a9c-42fb-a501-881d427400dc",
@@ -280,28 +262,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "e1db5905-93de-4f07-afeb-b37440b2621a",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Point",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "48b6fa8c-c953-473d-b0ff-33a6339716a8",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "5bb5ecb8-f1f7-4938-9419-a0d92f353b3b",

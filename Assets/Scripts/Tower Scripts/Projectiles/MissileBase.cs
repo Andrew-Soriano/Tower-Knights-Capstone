@@ -5,18 +5,17 @@ public abstract class MissileBase : AmmoBase
     [SerializeField] private float speed = 12f;
     [SerializeField] private float rotateSpeed = 10f;
 
-    void Update()
+    protected virtual void Update()
     {
-        //Check if target died
         if (_targetTransform != null)
         {
-            _targetPosition = _targetTransform.position; // update dynamic position
+            _targetPosition = _targetTransform.position;
         }
 
         MoveTowards(_targetPosition);
     }
 
-    void MoveTowards(Vector3 dest)
+    protected void MoveTowards(Vector3 dest)
     {
         //Move
         Vector3 dir = (dest - transform.position).normalized;

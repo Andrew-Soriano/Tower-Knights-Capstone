@@ -10,3 +10,8 @@ public interface IClickable
 {
     public void OnClicked();
 }
+
+public interface IArtilleryTarget
+{
+
+}

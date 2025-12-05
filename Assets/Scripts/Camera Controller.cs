@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using UnityEngine.Windows;
 using static Unity.Collections.AllocatorManager;
 using static UnityEngine.GraphicsBuffer;
 
@@ -37,6 +39,9 @@ public class CameraController : MonoBehaviour
     private bool rmb;
     private bool mmb;
     private bool _ignoreNextClick = false;
+    private bool _leftMouseDownThisClick = false;
+    private int _frameLastClicked = -1;
+    private int _frameInputStarted;
 
     Vector3 velocity;
 
@@ -62,13 +67,39 @@ public class CameraController : MonoBehaviour
 
     public void OnMMB(InputAction.CallbackContext ctx)
         => mmb = ctx.ReadValueAsButton();
-    public void OnLMB(InputAction.CallbackContext ctx)
+    
+    private void OnLMBStarted(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
-        {
-            HandleClick();
-        }
+        _leftMouseDownThisClick = true;
     }
+
+    private void OnLMBPerformed(InputAction.CallbackContext ctx)
+    {
+        if (!_leftMouseDownThisClick)
+            return;
+
+        if (_ignoreNextClick)
+        {
+            _ignoreNextClick = false;
+            _leftMouseDownThisClick = false;
+            return;
+        }
+
+        if (IsPointerOverUI())
+        {
+            _leftMouseDownThisClick = false;
+            return;
+        }
+
+        HandleClick();
+        _leftMouseDownThisClick = false;
+    }
+
+    private void OnLMBCanceled(InputAction.CallbackContext ctx)
+    {
+        _leftMouseDownThisClick = false;
+    }
+
 
 
     private void Update()
@@ -88,19 +119,30 @@ public class CameraController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-            // Initialize target zoom to current camera zoom
-            targetZoom = cam.orthographic ? cam.orthographicSize : cam.transform.localPosition.y;
+        
+        // Initialize target zoom to current camera zoom
+        targetZoom = cam.orthographic ? cam.orthographicSize : cam.transform.localPosition.y;
         targetYaw = transform.eulerAngles.y;
+    }
+
+    private void Start()
+    {
+        _frameInputStarted = Time.frameCount;
+        input.SwitchCurrentActionMap("Camera");
     }
 
     void OnEnable()
     {
-
+        input.actions["LMB"].started += OnLMBStarted;
+        input.actions["LMB"].performed += OnLMBPerformed;
+        input.actions["LMB"].canceled += OnLMBCanceled;
     }
 
     void OnDisable()
     {
-
+        input.actions["LMB"].started -= OnLMBStarted;
+        input.actions["LMB"].performed -= OnLMBPerformed;
+        input.actions["LMB"].canceled -= OnLMBCanceled;
     }
 
     void HandleMovement()
@@ -201,8 +243,13 @@ public class CameraController : MonoBehaviour
 
     public void HandleClick()
     {
-        if (_ignoreNextClick)
+        int currentFrame = Time.frameCount;
+
+        if (_ignoreNextClick || IsPointerOverUI())
+        {
             return;
+        }
+        _frameLastClicked = currentFrame;
 
         if (UnityEngine.EventSystems.EventSystem.current != null &&
             UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -211,14 +258,22 @@ public class CameraController : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            var clickable = hit.collider.GetComponent<IClickable>();
-            if (clickable != null)
+
+            if (SelectionManager.instance.GetCurrent() is TowerCatapult catapult)
             {
-                //Trigger object's logic for handling being clicked
+                catapult.SetTarget(hit.collider.transform.position);
+                SelectionManager.instance.Deselect();
+                return;
+            }
+
+            if (hit.collider.TryGetComponent<IClickable>(out var clickable))
+            {
                 clickable.OnClicked();
             }
+
         }
     }
+
     public void IgnoreNextClick()
     {
         _ignoreNextClick = true;
@@ -229,5 +284,15 @@ public class CameraController : MonoBehaviour
     {
         yield return null; // wait 1 frame
         _ignoreNextClick = false;
+    }
+
+    private bool IsPointerOverUI()
+    {
+        var menu = UIManager.instance.currentMenu;
+        if (menu == null || menu.panel == null)
+            return false;
+
+        Vector2 pos = Mouse.current.position.ReadValue();
+        return menu.panel.Pick(pos) != null;
     }
 }

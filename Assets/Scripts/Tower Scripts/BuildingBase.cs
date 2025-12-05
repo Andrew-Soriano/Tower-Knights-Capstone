@@ -68,14 +68,7 @@ public class UIBuildingActionButton
 
     private void OnClick()
     {
-        if (_building.TryUpgrade(_index))
-        {
-            UIManager.instance.RefreshUpgradeMenu(_building);
-        }
-        else
-        {
-            UIManager.instance.ShowUpgradeError(_building.GetMissingResources(_building.actions[_index].levelCosts[_index]));
-        }
+        _building.TryUpgrade(_index);
     }
 
     public void UpdateDisplay(BuildingUpgradeAction action)
@@ -193,12 +186,10 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
 
     public virtual void OnDeselect()
     {
-        throw new NotImplementedException();
     }
 
     public virtual void OnSelect()
     {
-        throw new NotImplementedException();
     }
     public void IncrementUpgradeLevel(UpgradeType type)
     {
@@ -218,13 +209,18 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
 
         // Not enough resources?
         if (!Stockpile.HasResources(cost))
+        {
+            UIManager.instance.ShowUpgradeError(GetMissingResources(cost));
             return false;
+        }
 
         // Apply effect
         action.applyEffect?.Invoke();
 
         // Increase level
         action.CurrentLevel++;
+
+        UIManager.instance.RefreshUpgradeMenu(this);
 
         return true;
     }

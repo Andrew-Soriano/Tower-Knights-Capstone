@@ -5,10 +5,10 @@ public class TowerArrow : MissileBase
 {
     protected override void ImpactEnemy(Collider other)
     {
-        EnemyController enemy = other.GetComponent<EnemyController>();
+        EnemyController enemy = other.GetComponentInParent<EnemyController>();
         if (enemy != null)
         {
-            enemy.Damage(_damage, _type);
+            enemy.TakeDamage(_damage, _type);
         }
 
         base.ImpactEnemy(other);

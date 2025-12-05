@@ -103,6 +103,7 @@ MonoBehaviour:
   _buildingModel: {fileID: 4641979299603542563}
   _defaultMode: 0
   id: 0
+  actions: []
   _icon1: {fileID: 21300000, guid: 46f7498daa0350a46b6d4ff78a2f9b69, type: 3}
   _icon2: {fileID: 21300000, guid: 834ace449590c444697e40cb234d34ea, type: 3}
   _icon3: {fileID: 21300000, guid: 236d64738015c5f4fae16ce87b78c112, type: 3}
@@ -117,10 +118,10 @@ MonoBehaviour:
   _description4: Replace piercing damage arrows with fire arrows dealing fire damage.
   _front: {fileID: 444491875551279049}
   _ammo: {fileID: 4701508220683636121, guid: 92f44c4a26e63ff42af9c3bda196c1b0, type: 3}
-  _fireAngle: 180
-  _fireRange: 10
+  _fireAngle: 360
+  _fireRange: 6
   _fireRate: 1
-  _damage: 0
+  _damage: 10
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64

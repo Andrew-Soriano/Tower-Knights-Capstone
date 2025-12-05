@@ -4,32 +4,36 @@
         <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px;">
             <ui:VisualElement name="IconsContainer" class="IconContainer">
                 <ui:VisualElement name="WoodGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                    <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
                     <ui:Label name="WoodCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="PlanksGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="PlanksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Planks.png?fileID=21300000&amp;guid=d401cfef17300b14a8b7fa99b56202b6&amp;type=3#Icon_Planks&quot;);" />
+                    <ui:VisualElement name="PlanksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Planks.png?fileID=21300000&amp;guid=d401cfef17300b14a8b7fa99b56202b6&amp;type=3#Icon_Planks&quot;);" />
                     <ui:Label name="PlanksCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="StoneGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="StoneIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Stone.png?fileID=21300000&amp;guid=1aea025b33cc12e42be8ae403aea823b&amp;type=3#Icon_Stone&quot;);" />
+                    <ui:VisualElement name="StoneIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Stone.png?fileID=21300000&amp;guid=1aea025b33cc12e42be8ae403aea823b&amp;type=3#Icon_Stone&quot;);" />
                     <ui:Label name="StoneCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="BricksGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="BricksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Bricks.png?fileID=21300000&amp;guid=13db1b11c8f8f5f47ae94c50130f74e3&amp;type=3#Icon_Bricks&quot;);" />
+                    <ui:VisualElement name="BricksIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Bricks.png?fileID=21300000&amp;guid=13db1b11c8f8f5f47ae94c50130f74e3&amp;type=3#Icon_Bricks&quot;);" />
                     <ui:Label name="BricksCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="OreGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="OreIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Ore.png?fileID=21300000&amp;guid=75ab73bec60818a4e99ffc26f82214fe&amp;type=3#Icon_Ore&quot;);" />
+                    <ui:VisualElement name="OreIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Ore.png?fileID=21300000&amp;guid=75ab73bec60818a4e99ffc26f82214fe&amp;type=3#Icon_Ore&quot;);" />
                     <ui:Label name="OreCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="MetalGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="MetalIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Metal.png?fileID=21300000&amp;guid=3d6f05ecbdb73e343a7bf074012de927&amp;type=3#Icon_Metal&quot;);" />
+                    <ui:VisualElement name="MetalIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Metal.png?fileID=21300000&amp;guid=3d6f05ecbdb73e343a7bf074012de927&amp;type=3#Icon_Metal&quot;);" />
                     <ui:Label name="MetalCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="PartsGroup" class="StatusResourceGroup">
-                    <ui:VisualElement name="PartsIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
+                    <ui:VisualElement name="PartsIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
                     <ui:Label name="PartsCount" text="000" class="StatusResourceCount" />
+                </ui:VisualElement>
+                <ui:VisualElement name="HPGroup" class="StatusResourceGroup">
+                    <ui:Label name="HPLabel" text="HP:" class="StatusResourceCount" />
+                    <ui:Label name="HPCount" text="000" class="StatusResourceCount" />
                 </ui:VisualElement>
                 <ui:VisualElement name="RoundGroup" class="StatusResourceGroup">
                     <ui:Label name="RoundLabel" text="Round:" class="StatusResourceCount" />
@@ -44,12 +48,33 @@
             <ui:Label text="Build" name="Label" class="build_label" />
             <ui:TabView name="BuildTabView" style="width: 100%; height: 100%;">
                 <ui:Tab label="Towers" name="TowersTab" closeable="false">
-                    <ui:VisualElement name="ArcherGroup" style="flex-grow: 1;">
-                        <ui:Button text="Archery Tower" name="BuildArcherButton" class="build_button" />
-                        <ui:VisualElement name="ArcherWoodGroup" class="CostResourceGroup">
-                            <ui:VisualElement name="ArcherWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
-                            <ui:Label name="ArcherWoodCount" text="00" class="CostResourceCount" />
+                    <ui:VisualElement name="TowerGrid" class="tower-grid">
+                        <ui:VisualElement name="ArcherGroup" style="flex-grow: 1;">
+                            <ui:Button text="Archery Tower" name="BuildArcherButton" class="build_button" />
+                            <ui:VisualElement name="ArcherWoodGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="ArcherWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                                <ui:Label name="ArcherWoodCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
+                        <ui:VisualElement name="CatapultGroup" style="flex-grow: 1;">
+                            <ui:Button text="Catapult Tower" name="BuildCatapultButton" class="build_button" />
+                            <ui:VisualElement name="CatapultWoodGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="CatapultWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                                <ui:Label name="CatapultWoodCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="BombGroup" style="flex-grow: 1;">
+                            <ui:Button text="Bomb Tower" name="BuildBombButton" class="build_button" />
+                            <ui:VisualElement name="BombWoodGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="BombWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png&quot;);" />
+                                <ui:Label name="BombWoodCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="BombMetalGroup" class="CostResourceGroup">
+                                <ui:VisualElement name="BombMetalIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Metal.png&quot;);" />
+                                <ui:Label name="BombMetalCount" text="00" class="CostResourceCount" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
                     </ui:VisualElement>
                 </ui:Tab>
                 <ui:Tab label="Crafting" name="CraftingTab" closeable="true">
@@ -57,18 +82,25 @@
                         <ui:Button text="Sawmill&#10;" name="BuildSawmillButton" class="build_button" />
                         <ui:VisualElement name="ResourceCountContainer" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; padding-left: 8px;">
                             <ui:VisualElement name="SawmillWoodGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="SawmillWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
+                                <ui:VisualElement name="SawmillWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
                                 <ui:Label name="SawmillWoodCount" text="00" class="CostResourceCount" />
                             </ui:VisualElement>
                             <ui:VisualElement name="SawmillPartsGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="SawmillPartsIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
+                                <ui:VisualElement name="SawmillPartsIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
                                 <ui:Label name="SawmillPartsCount" text="00" class="CostResourceCount" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:Tab>
             </ui:TabView>
+            <ui:VisualElement name="BuildHoverMenu" class="hover-menu" style="display: none;">
+                <ui:Label name="BuildHoverName" class="hover-menu-name" />
+                <ui:Label name="BuildHoverDescription" class="hover-menu-description" />
+            <ui:VisualElement name="BuildHoverCostIcons" class="hover-cost-icons" />
         </ui:VisualElement>
+        </ui:VisualElement>
+
+
         <ui:VisualElement name="Resource" class="build_container" style="display: none; visibility: visible; position: absolute; height: 90%; top: 34px; left: 440px;">
             <ui:Label text="Resource" name="Label" class="build_label" />
             <ui:Button text="Archery Tower" name="BuildResourceButton" class="build_button" style="width: 118px; height: 108px; left: auto; right: 25%; top: 20px;" />

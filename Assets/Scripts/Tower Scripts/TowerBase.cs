@@ -7,6 +7,7 @@ public class TowerBase : BuildingBase
     [Header("References")]
     [SerializeField] protected Transform _front;
     [SerializeField] protected GameObject _ammo;
+    [SerializeField] private Transform _rotatingPart;
 
     [Header("Firing")]
     [SerializeField] protected float _fireAngle = 90f;
@@ -15,12 +16,12 @@ public class TowerBase : BuildingBase
     [SerializeField] protected int _damage = 0;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] protected LayerMask _enemyLayer;
 
-    private float _fireCooldown;
+    protected float _fireCooldown = 2f;
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         _fireCooldown -= Time.deltaTime;
 
@@ -29,34 +30,36 @@ public class TowerBase : BuildingBase
         {
             Transform target = GetTargetInRange();
             if(target != null){
+                FlashRotateTurret(target.position);
                 FireAt(target);
-                _fireCooldown = 1f / _fireRate;
+                _fireCooldown = 2f / _fireRate;
             }
         }
         
     }
 
-    Transform GetTargetInRange()
+    protected virtual Transform GetTargetInRange()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, _fireRange, _enemyLayer);
 
-        float bestDist = float.MaxValue;
+        float maxProgress = float.MinValue;
         Transform bestTarget = null;
 
         foreach (Collider hit in hits)
         {
+            var enemy = hit.GetComponentInParent<EnemyController>();
             //If enemy is dead, do not target
-            if (hit.GetComponent<EnemyController>().isDead()) continue;
+            if (enemy.isDead()) continue;
 
-            Vector3 toTarget = hit.transform.position - transform.position;
+            Vector3 toTarget = enemy.transform.position - transform.position;
             // Check angle
             if (Vector3.Angle(_front.forward, toTarget) > _fireAngle * 0.5f)
                 continue;
 
-            float dist = toTarget.sqrMagnitude;
-            if (dist < bestDist)
+            float progress = enemy.Path_Progress;
+            if (progress > maxProgress)
             {
-                bestDist = dist;
+                maxProgress = progress;
                 bestTarget = hit.transform;
             }
         }
@@ -64,18 +67,29 @@ public class TowerBase : BuildingBase
         return bestTarget;
     }
 
-    private void FireAt(Transform target)
+    protected virtual void FireAt(Transform target)
     {
         Instantiate(_ammo, _front.position, _front.rotation).GetComponent<AmmoBase>().Initialize(target, _damage);
     }
 
     public override void OnSelect()
     {
+        base.OnSelect();
         UIManager.instance.OpenUpgradeMenu(this);
     }
 
     public override void OnDeselect()
     {
         UIManager.instance.CloseMenu();
+    }
+
+    public void FlashRotateTurret(Vector3 target)
+    {
+        if (_rotatingPart != null)
+        {
+            Vector3 dir = target - _rotatingPart.position;
+            dir.y = 0;
+            _rotatingPart.rotation = Quaternion.LookRotation(dir);
+        }
     }
 }

@@ -4,17 +4,18 @@ public abstract class ArtilleryBase : AmmoBase
 {
     [SerializeField] private float travelTime = 1.2f;
     [SerializeField] private float arcHeight = 3f;
+    protected bool inAir = false;
 
-    private Vector3 _startPosition;
-    private float _t;
+    protected Vector3 _startPosition;
+    protected float _t;
 
     void Start()
     {
-        _startPosition = transform.position;
     }
 
-    void Update()
+    protected virtual void Update()
     {
+        if (!inAir) return;
         _t += Time.deltaTime / travelTime;
 
         // Get linear horizontal movement
@@ -26,12 +27,8 @@ public abstract class ArtilleryBase : AmmoBase
 
         transform.position = linearPos;
 
-        if (_t >= 1f)
-            Impact();
-    }
-
-    void Impact()
-    {
-        Destroy(gameObject);
+        // Stop in-air when we reach target
+        //if (_t >= 1f)
+            //inAir = false;
     }
 }

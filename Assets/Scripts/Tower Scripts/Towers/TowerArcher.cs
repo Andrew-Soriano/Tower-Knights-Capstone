@@ -9,8 +9,6 @@ public class TowerArcher : TowerBase
     {
         base.Awake();
 
-        _damage = 10;
-
         _actions[0].action = UpgradeShootSpeed;
         _actions[1].action = UpgradeShotDamage;
         _actions[2].action = UpgradeSlowEnemy;

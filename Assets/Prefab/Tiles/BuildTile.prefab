@@ -99,7 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerTile
   _defaultMode: 0
+  _tileRenderer: {fileID: 4570264950740784421}
   _ArcherTower: {fileID: 4169213283226686221, guid: 59fe8efe177289549b56b24c949a3953, type: 3}
+  _CatapultTower: {fileID: 4169213283226686221, guid: 77a666cecaead6742a902b31eea5d4ee, type: 3}
+  _BombTower: {fileID: 4169213283226686221, guid: da54a49aaa672d04b820b19839d5051f, type: 3}
   _SawmillTower: {fileID: 4169213283226686221, guid: 06d4a38ebd60f36429a5c98787f2ad61, type: 3}
 --- !u!1001 &2931071929566628257
 PrefabInstance:
@@ -188,5 +191,10 @@ MonoBehaviour:
 --- !u!4 &3397960552462249546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef662074591300146afcd54411732be8, type: 3}
+  m_PrefabInstance: {fileID: 2931071929566628257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4570264950740784421 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: ef662074591300146afcd54411732be8, type: 3}
   m_PrefabInstance: {fileID: 2931071929566628257}
   m_PrefabAsset: {fileID: 0}

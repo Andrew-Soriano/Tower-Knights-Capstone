@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class TowerArcher : TowerBase
 {
     [SerializeField] private ArcRange _rangeArc;
     [SerializeField] private GameObject _fireArrow;
+    [SerializeField] private float _slow;
 
     protected override void Awake()
     {
@@ -14,6 +16,30 @@ public class TowerArcher : TowerBase
         _actions[2].action = UpgradeSlowEnemy;
         _actions[3].action = UpgradeFireArrows;
     }
+
+    protected override void Update()
+    {
+        _fireCooldown -= Time.deltaTime;
+
+
+        if (_fireCooldown <= 0f)
+        {
+            Transform target = GetTargetInRange();
+            if (target != null)
+            {
+                FlashRotateTurret(target.position);
+                SoundManager.instance.PlaySound(Sounds.ArrowLaunch);
+                FireAt(target);
+                _fireCooldown = 2f / _fireRate;
+            }
+        }
+    }
+
+    protected override void FireAt(Transform target)
+    {
+        Instantiate(_ammo).GetComponent<TowerArrow>().Initialize(target, _damage, _slow);
+    }
+
     public override void OnSelect()
     {
 
@@ -21,13 +47,10 @@ public class TowerArcher : TowerBase
         {
             _rangeArc.gameObject.SetActive(true);
 
-            // Update arc to match our firing parameters
             _rangeArc.SetArc(_fireRange, _fireAngle);
 
-            // Rotate the arc to match the tower's forward direction
             _rangeArc.transform.rotation = Quaternion.LookRotation(_front.forward, Vector3.up);
 
-            //Fade it in
             _rangeArc.FadeIn();
         }
 
@@ -56,11 +79,23 @@ public class TowerArcher : TowerBase
 
     private void UpgradeSlowEnemy()
     {
-
+        _slow += .2f;
     }
 
     private void UpgradeFireArrows()
     {
         _ammo = _fireArrow;
+    }
+
+    protected override Action GetUpgradeAction(UpgradeType type)
+    {
+        return type switch
+        {
+            UpgradeType.ShotDamage => UpgradeShotDamage,
+            UpgradeType.ShootSpeed => UpgradeShootSpeed,
+            UpgradeType.SlowEnemy => UpgradeSlowEnemy,
+            UpgradeType.FireArrows => UpgradeFireArrows,
+            _ => base.GetUpgradeAction(type)
+        };
     }
 }

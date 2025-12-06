@@ -15,6 +15,11 @@ MonoBehaviour:
   waves:
   - enemies:
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
+    segments:
+    - count: 1
+      delay: 0.5
+  - enemies:
+    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}

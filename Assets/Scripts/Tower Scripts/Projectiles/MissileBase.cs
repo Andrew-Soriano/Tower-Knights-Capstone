@@ -17,18 +17,15 @@ public abstract class MissileBase : AmmoBase
 
     protected void MoveTowards(Vector3 dest)
     {
-        //Move
         Vector3 dir = (dest - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
 
-        // Rotate to face movement
         if (dir.sqrMagnitude > 0.001f)
         {
             Quaternion lookRot = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, rotateSpeed * Time.deltaTime);
         }
 
-        // Reached?
         if (_targetTransform == null && Vector3.Distance(transform.position, dest) < 0.2f)
         {
             Impact();

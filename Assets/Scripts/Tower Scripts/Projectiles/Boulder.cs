@@ -55,13 +55,11 @@ public class Boulder : ArtilleryBase
 
     void OnTriggerEnter(Collider collision)
     {
-        // Check if we hit the ground
         if (!onGround && collision.gameObject.CompareTag("Ground"))
         {
             onGround = true;
             inAir = false;
 
-            // Set rolling direction toward the target
             moveDirection = Vector3.ProjectOnPlane(_targetPosition - _startPosition, Vector3.up).normalized;
 
             rollTimer = 0f;

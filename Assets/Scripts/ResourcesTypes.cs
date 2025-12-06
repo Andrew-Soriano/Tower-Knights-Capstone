@@ -79,7 +79,6 @@ public class Resources : IEnumerable<int>
 
     public bool HasResources(Resources cost)
     {
-        // Array of "this" resource values in the same order as GetEnumerator
         int[] current = { wood, planks, stone, bricks, ore, metal, parts};
 
         int i = 0;

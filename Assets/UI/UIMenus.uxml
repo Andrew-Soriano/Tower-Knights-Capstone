@@ -1,6 +1,19 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/BuildMenuUSS.uss?fileID=7433441132597879392&amp;guid=ddeb096ac13e60f4fa903e74962e4888&amp;type=3#BuildMenuUSS" />
-    <ui:VisualElement name="UIRoot" style="position: relative; width: 100%; height: 100%;">
+    <ui:VisualElement name="UIRoot" style="position: relative; width: 100%; height: 100%; display: flex;">
+        <ui:VisualElement name="MainMenu" style="flex-grow: 0; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 25%; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: flex;">
+            <ui:Label text="Tower Knights" name="MainMenuLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />
+            <ui:VisualElement name="MainMenuButtonGroup" style="flex-grow: 1; flex-direction: row; justify-content: center; top: auto; height: auto; margin-bottom: 10%; margin-top: 10%;">
+                <ui:Button text="Start" name="MainMenuStartButton" style="width: 20%; height: 20%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="GameOverMenu" style="flex-grow: 0; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 25%; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
+            <ui:Label text="Game Over" name="GameOverLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />
+            <ui:VisualElement name="GameOverButtonGroup" style="flex-grow: 1; flex-direction: row; justify-content: center; top: auto; height: auto; margin-bottom: 10%; margin-top: 10%;">
+                <ui:Button text="Restart" name="GameOverRestartGameButton" style="width: 20%; height: 20%;" />
+                <ui:Button text="Quit" name="GameOverQuitButton" style="width: 20%; height: 20%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px;">
             <ui:VisualElement name="IconsContainer" class="IconContainer">
                 <ui:VisualElement name="WoodGroup" class="StatusResourceGroup">
@@ -41,71 +54,93 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="CenterContainer" style="top: 100%;">
-                <ui:Button text="Next Round" name="NextRoundButton" class="NextRoundButton" />
+                <ui:Button text="Next Round" name="NextRoundButton" class="NextRoundButton" style="display: none;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Build" class="build_container" style="display: none; visibility: visible; position: absolute; height: 84%; top: 16%;">
+        <ui:VisualElement name="Build" class="build_container" style="display: none; visibility: visible; position: absolute; height: 84%; top: 16%; left: 440px;">
             <ui:Label text="Build" name="Label" class="build_label" />
             <ui:TabView name="BuildTabView" style="width: 100%; height: 100%;">
                 <ui:Tab label="Towers" name="TowersTab" closeable="false">
                     <ui:VisualElement name="TowerGrid" class="tower-grid">
-                        <ui:VisualElement name="ArcherGroup" style="flex-grow: 1;">
-                            <ui:Button text="Archery Tower" name="BuildArcherButton" class="build_button" />
-                            <ui:VisualElement name="ArcherWoodGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="ArcherWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
-                                <ui:Label name="ArcherWoodCount" text="00" class="CostResourceCount" />
+                        <ui:VisualElement name="ArcherGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-                        <ui:VisualElement name="CatapultGroup" style="flex-grow: 1;">
-                            <ui:Button text="Catapult Tower" name="BuildCatapultButton" class="build_button" />
-                            <ui:VisualElement name="CatapultWoodGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="CatapultWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
-                                <ui:Label name="CatapultWoodCount" text="00" class="CostResourceCount" />
+                        <ui:VisualElement name="CatapultGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-                        <ui:VisualElement name="BombGroup" style="flex-grow: 1;">
-                            <ui:Button text="Bomb Tower" name="BuildBombButton" class="build_button" />
-                            <ui:VisualElement name="BombWoodGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="BombWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png&quot;);" />
-                                <ui:Label name="BombWoodCount" text="00" class="CostResourceCount" />
-                            </ui:VisualElement>
-                            <ui:VisualElement name="BombMetalGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="BombMetalIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Metal.png&quot;);" />
-                                <ui:Label name="BombMetalCount" text="00" class="CostResourceCount" />
+                        <ui:VisualElement name="BomberGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-
+                        <ui:VisualElement name="AlchemistGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:Tab>
                 <ui:Tab label="Crafting" name="CraftingTab" closeable="true">
-                    <ui:VisualElement name="Sawmill" style="flex-grow: 1;">
-                        <ui:Button text="Sawmill&#10;" name="BuildSawmillButton" class="build_button" />
-                        <ui:VisualElement name="ResourceCountContainer" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; padding-left: 8px;">
-                            <ui:VisualElement name="SawmillWoodGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="SawmillWoodIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
-                                <ui:Label name="SawmillWoodCount" text="00" class="CostResourceCount" />
+                    <ui:VisualElement name="SawmillGroup" class="upgrade_container">
+                        <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                            <ui:VisualElement name="Icon" class="upgrade_icon" />
+                            <ui:Button name="Button" class="upgrade_click_area" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MasonGroup" class="upgrade_container">
+                        <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                            <ui:VisualElement name="Icon" class="upgrade_icon" />
+                            <ui:Button name="Button" class="upgrade_click_area" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="BlacksmithGroup" class="upgrade_container">
+                        <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                            <ui:VisualElement name="Icon" class="upgrade_icon" />
+                            <ui:Button name="Button" class="upgrade_click_area" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:Tab>
+                <ui:Tab label="Resources" name="ResourcesTab" closeable="false">
+                    <ui:VisualElement name="ResourceGrid" style = "flex-direction: row; flex-wrap: wrap; justify-content: space-between;">
+                        <ui:VisualElement name="LumberyardGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="SawmillPartsGroup" class="CostResourceGroup">
-                                <ui:VisualElement name="SawmillPartsIcon" class="CostResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Parts.png?fileID=21300000&amp;guid=37074ddd79503554591e4e124d051026&amp;type=3#Icon_Parts&quot;);" />
-                                <ui:Label name="SawmillPartsCount" text="00" class="CostResourceCount" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="QuarryGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="MineGroup" class="upgrade_container">
+                            <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
+                                <ui:VisualElement name="Icon" class="upgrade_icon" />
+                                <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:Tab>
             </ui:TabView>
-            <ui:VisualElement name="BuildHoverMenu" class="hover-menu" style="display: none;">
+            <ui:VisualElement name="BuildHoverMenu" class="hover-menu" style="display: none; left: -73%; width: 70%; height: 201px; top: 77px; flex-wrap: wrap;">
                 <ui:Label name="BuildHoverName" class="hover-menu-name" />
-                <ui:Label name="BuildHoverDescription" class="hover-menu-description" />
-            <ui:VisualElement name="BuildHoverCostIcons" class="hover-cost-icons" />
+                <ui:Label name="BuildHoverDescription" class="hover-menu-name" style="font-size: 16px; white-space: normal; flex-wrap: wrap;" />
+                <ui:VisualElement name="HoverCostGroup" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; position: absolute; top: 80%;">
+                    <ui:Label text="Cost:" name="BuildHoverCostLabel" style="color: rgb(255, 255, 255);" />
+                    <ui:VisualElement name="BuildHoverCostIcons" class="hover-cost-icons" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
-        </ui:VisualElement>
-
-
-        <ui:VisualElement name="Resource" class="build_container" style="display: none; visibility: visible; position: absolute; height: 90%; top: 34px; left: 440px;">
-            <ui:Label text="Resource" name="Label" class="build_label" />
-            <ui:Button text="Archery Tower" name="BuildResourceButton" class="build_button" style="width: 118px; height: 108px; left: auto; right: 25%; top: 20px;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Upgrade" class="build_container" style="display: flex; visibility: visible; position: absolute; height: 84%; top: 16%; left: 440px;">
+        <ui:VisualElement name="Upgrade" enabled="true" class="build_container" style="display: none; visibility: visible; position: absolute; height: 84%; top: 16%; left: 440px;">
             <ui:Label text="Upgrade" name="UpgradeLabel" class="build_label" />
             <ui:VisualElement name="TowerRotateContainer" style="flex-grow: 0; flex-direction: row; height: auto; justify-content: space-between; width: 100%; display: flex; visibility: visible;">
                 <ui:Button text="Rotate Left" name="RotateLeft" style="width: 64px;" />

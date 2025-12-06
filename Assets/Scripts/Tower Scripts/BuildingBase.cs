@@ -57,7 +57,7 @@ public class UIBuildingActionButton
         _index = index;
         action = building.actions[index];
 
-        button.clicked -= OnClick; //Make sure any previous instance is removed
+        button.clicked -= OnClick;
         button.clicked += OnClick;
 
         if (action.icon != null && action.icon.texture != null)
@@ -77,9 +77,18 @@ public class UIBuildingActionButton
 
         this.action = action;
     }
+    public void SetInteractable(bool enabled)
+    {
+        button.SetEnabled(enabled);
+
+        var root = button.parent;
+
+        if (enabled)
+            root.RemoveFromClassList("disabled");
+        else
+            root.AddToClassList("disabled");
+    }
 }
-
-
 
 public interface IBuildingActions
 {
@@ -95,8 +104,8 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
     protected List<BuildingActionData> _actions;
     [SerializeField] protected int _defaultMode;
     [SerializeField] protected towerID id;
-    [SerializeField] private Dictionary<int, Resources> _upgradeData;
-    private Dictionary<UpgradeType, int> _currentUpgradeLevels = new();
+    private Dictionary<int, Resources> _upgradeData;
+    private Dictionary<UpgradeType, int> _currentUpgradeLevels;
 
     public BuildingUpgradeAction[] actions;
     protected Resources Stockpile => CastleController.instance.stockpile;
@@ -107,66 +116,45 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
 
     public int GetCurrentUpgradeLevel(UpgradeType type) => _currentUpgradeLevels.ContainsKey(type) ? _currentUpgradeLevels[type] : 0;
 
-    [Header("BuildingMenu")]
-    [SerializeField] protected Sprite _icon1;
-    [SerializeField] protected Sprite _icon2;
-    [SerializeField] protected Sprite _icon3;
-    [SerializeField] protected Sprite _icon4;
-    [SerializeField] protected string _name1;
-    [SerializeField] protected string _name2;
-    [SerializeField] protected string _name3;
-    [SerializeField] protected string _name4;
-    [SerializeField] protected string _description1;
-    [SerializeField] protected string _description2;
-    [SerializeField] protected string _description3;
-    [SerializeField] protected string _description4;
-
     protected virtual void Awake()
     {
-        _actions = new List<BuildingActionData>
+        var towerData = TowerDatabase.Instance.GetTower(ID);
+        if (towerData == null)
         {
-            new BuildingActionData(_name1, _description1, _icon1),
-            new BuildingActionData(_name2, _description2, _icon2),
-            new BuildingActionData(_name3, _description3, _icon3),
-            new BuildingActionData(_name4, _description4, _icon4)
-        };
+            Debug.LogError($"TowerDatabase has no data for {id}");
+            return;
+        }
 
-        actions = new BuildingUpgradeAction[4];
+        actions = new BuildingUpgradeAction[towerData.upgrades.Count];
+        _actions = new List<BuildingActionData>();
+        _upgradeData = new Dictionary<int, Resources>();
+        _currentUpgradeLevels = new Dictionary<UpgradeType, int>();
 
-        actions[0] = new BuildingUpgradeAction
+        for (int i = 0; i < towerData.upgrades.Count; i++)
         {
-            name = _name1,
-            description = _description1,
-            icon = _icon1,
-            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name1))
-        };
+            var upgradeData = towerData.upgrades[i];
+            var upgradeInfo = upgradeData.upgrade;
 
-        actions[1] = new BuildingUpgradeAction
-        {
-            name = _name2,
-            description = _description2,
-            icon = _icon2,
-            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name2))
-        };
+            var action = new BuildingUpgradeAction
+            {
+                name = upgradeInfo.name,
+                description = upgradeInfo.description,
+                icon = upgradeInfo.icon,
+                levelCosts = upgradeData.levelCosts,
+                applyEffect = GetUpgradeAction(upgradeInfo.type)
+            };
 
-        actions[2] = new BuildingUpgradeAction
-        {
-            name = _name3,
-            description = _description3,
-            icon = _icon3,
-            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name3))
-        };
+            actions[i] = action;
 
-        actions[3] = new BuildingUpgradeAction
-        {
-            name = _name4,
-            description = _description4,
-            icon = _icon4,
-            levelCosts = TowerData.GetUpgradeLevelsCosts(id, TowerData.MapStringToUpgradeType(_name4))
-        };
+            _actions.Add(new BuildingActionData(action.name, action.description, action.icon, action.applyEffect));
+            _upgradeData[i] = action.levelCosts.Count > 0 ? action.levelCosts[0] : null;
+            _currentUpgradeLevels[upgradeInfo.type] = 0;
+        }
+    }
 
-        foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
-            _currentUpgradeLevels[type] = 0;
+    protected virtual Action GetUpgradeAction(UpgradeType type)
+    {
+        return () => Debug.LogWarning($"{id} does not implement upgrade {type}");
     }
 
     public void RotateLeft()
@@ -191,36 +179,27 @@ public class BuildingBase : MonoBehaviour, IClickable, ISelectable, IBuildingAct
     public virtual void OnSelect()
     {
     }
-    public void IncrementUpgradeLevel(UpgradeType type)
-    {
-        if (_currentUpgradeLevels[type] < TowerData.GetMaxLevels(id, type))
-            _currentUpgradeLevels[type]++;
-    }
 
     public bool TryUpgrade(int index)
     {
         var action = actions[index];
 
-        // Prevent going past max
         if (action.CurrentLevel >= action.maxLevel)
             return false;
 
         Resources cost = action.levelCosts[action.CurrentLevel];
 
-        // Not enough resources?
         if (!Stockpile.HasResources(cost))
         {
-            UIManager.instance.ShowUpgradeError(GetMissingResources(cost));
+            UIManager.instance.UpgradeMenuContoller.ShowUpgradeError(GetMissingResources(cost));
             return false;
         }
 
-        // Apply effect
         action.applyEffect?.Invoke();
 
-        // Increase level
         action.CurrentLevel++;
 
-        UIManager.instance.RefreshUpgradeMenu(this);
+        UIManager.instance.UpgradeMenuContoller.RefreshUpgradeMenu(this);
 
         return true;
     }

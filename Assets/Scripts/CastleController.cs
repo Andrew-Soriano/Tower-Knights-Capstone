@@ -5,14 +5,15 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
 {
     public static CastleController instance;
 
-    public Resources stockpile = new Resources();
+    public Resources stockpile= new ();
 
     [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
 
+    public static event Action gameOver;
+
     private void Awake()
     {
-        //Singleton pattern
         if(instance == null)
         {
             instance = this;
@@ -20,14 +21,16 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         {
             Destroy(gameObject);
         }
+        if (stockpile == null)
+            Debug.LogError("CastleController: stockpile is not assigned!");
 
         _HP = _maxHP;
     }
 
     private void Start()
     {
-        UIManager.instance.RefreshResourceUI(stockpile);
-        UIManager.instance.RefreshCastleHP(_HP, _maxHP);
+        UIManager.instance.StatusBarContoller.RefreshResourceUI(stockpile);
+        UIManager.instance.StatusBarContoller.RefreshCastleHP(_HP, _maxHP);
     }
 
     public void OnClicked()
@@ -37,26 +40,26 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
 
     public void OnSelect()
     {
-        UIManager.instance.OpenCastleMenu();
     }
 
     public void OnDeselect()
     {
-        UIManager.instance.CloseMenu();
     }
 
     public void trigger(EnemyController other)
     {
         _HP -= other.Damage;
 
-        UIManager.instance.RefreshCastleHP(_HP, _maxHP);
-        UIManager.instance.FlashCastleHP();
+        UIManager.instance.StatusBarContoller.RefreshCastleHP(_HP, _maxHP);
+        UIManager.instance.StatusBarContoller.FlashCastleHP();
+
+        if (_HP <= 0) gameOver?.Invoke();
     }
 
     public bool BuildTower(TowerTile tile, towerID id)
     {
-        Resources cost = TowerData.GetCosts(id);
-
+        var towerData = TowerDatabase.Instance.GetTower(id);
+        Resources cost = towerData.cost;
         if (stockpile.HasResources(cost))
         {
             stockpile.Pay(cost);
@@ -87,7 +90,7 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         if (clampedAmount > 0)
         {
             stockpile.Add(type, clampedAmount);
-            UIManager.instance.RefreshResourceUI(CastleController.instance.stockpile);
+            UIManager.instance.StatusBarContoller.RefreshResourceUI(CastleController.instance.stockpile);
             return true;
         }
 
@@ -97,6 +100,6 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
     public void SubtractFromStock(ResourceType type, int amount)
     {
         stockpile.Subtract(type, amount);
-        UIManager.instance.RefreshResourceUI(CastleController.instance.stockpile);
+        UIManager.instance.StatusBarContoller.RefreshResourceUI(CastleController.instance.stockpile);
     }
 }

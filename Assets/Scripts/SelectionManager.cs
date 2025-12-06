@@ -29,7 +29,6 @@ public class SelectionManager : MonoBehaviour
         if (_current == target)
             return;
 
-        // Deselect old
         if (_current != null)
             _current.OnDeselect();
 

@@ -15,16 +15,16 @@ public class ResourceTile : BuildableTile
 
     private void OnEnable()
     {
-        UIManager.nextRoundClicked += AddResource;
+        StatusBarController.nextRoundClicked += AddResource;
     }
     private void OnDisable()
     {
-        UIManager.nextRoundClicked -= AddResource;
+        StatusBarController.nextRoundClicked -= AddResource;
     }
 
     public override void OnSelect()
     {
-        UIManager.instance.OpenResourceMenu(this);
+        UIManager.instance.BuildMenuControler.OpenBuildMenu();
         base.OnSelect();
     }
 

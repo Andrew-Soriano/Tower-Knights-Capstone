@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6557485082929773091}
   - component: {fileID: 6281200882845457045}
-  - component: {fileID: 6907342250287048520}
-  - component: {fileID: 3244742778833657797}
+  - component: {fileID: -6464589469843672135}
   m_Layer: 0
   m_Name: AlchemistsTower
   m_TagString: Untagged
@@ -57,29 +56,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.670634, y: 1.7917347, z: 1.550816}
   m_Center: {x: -0.035319924, y: 0.8958672, z: -0.0980584}
---- !u!95 &6907342250287048520
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4169213283226686221}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: daedb010aaef0f84ca34372963831ceb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3244742778833657797
+--- !u!114 &-6464589469843672135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,37 +65,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4169213283226686221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2111287ec5f91974ca287c30cb5bf1ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 66ca4a9c609bb8b45abb79757a7c139f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TowerCatapult
-  _buildingModel: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::TowerAlchemist
+  _buildingModel: {fileID: 1881663757651239264}
   _defaultMode: 0
-  id: 1
+  id: 3
   actions: []
-  _icon1: {fileID: 21300000, guid: 5cdb9353c2043ac4693e474b01213e4a, type: 3}
-  _icon2: {fileID: 21300000, guid: cd393fbf0368bee4c816be9e58ec44ad, type: 3}
-  _icon3: {fileID: 21300000, guid: 0fd4dc7f9389ede41ae87f9ab08008a6, type: 3}
-  _icon4: {fileID: 21300000, guid: d4e5484512a61fc45a82bfa06507bc81, type: 3}
-  _name1: Shoot Speed
-  _name2: Shot Damage
-  _name3: Pierce
-  _name4: Spiked
-  _description1: Increase the fire rate of your catapult
-  _description2: Increase the damage on contact witht he boulder.
-  _description3: Allows the boulder to roll through more enemies before breaking.
-  _description4: Changes the boulder damage from blunt to pierce.
   _front: {fileID: 1963123501199982415}
-  _ammo: {fileID: 8715890790599363042, guid: 2d5f9c32519b812438dfa46064eb5a5a, type: 3}
+  _ammo: {fileID: 483498042547705549, guid: 1af61fdb2af615441bf5c5f482a01d73, type: 3}
   _rotatingPart: {fileID: 0}
   _fireAngle: 90
-  _fireRange: 15
-  _fireRate: 1
-  _damage: 0
+  _fireRange: 5
+  _fireRate: 0.4
+  _damage: 1
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  _spikedAmmo: {fileID: 8715890790599363042, guid: 7eba787ff235b6044b4253022726a1b8, type: 3}
-  _pierce: 0
+  _fireAmmo: {fileID: 483498042547705549, guid: 6902f0a465268c74aad724886e1d0d9c, type: 3}
+  _slow: 0.5
 --- !u!1 &8857369479450053074
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +178,11 @@ PrefabInstance:
 --- !u!4 &1249418610644302810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e8c3970e5018eee43a507ab54bafa003, type: 3}
+  m_PrefabInstance: {fileID: 1647309100616932401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1881663757651239264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e8c3970e5018eee43a507ab54bafa003, type: 3}
   m_PrefabInstance: {fileID: 1647309100616932401}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7422748236817558066 stripped

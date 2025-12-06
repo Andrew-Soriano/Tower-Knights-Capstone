@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TowerCatapult : TowerBase
@@ -13,9 +14,6 @@ public class TowerCatapult : TowerBase
     protected override void Awake()
     {
         base.Awake();
-
-        _damage = 10;
-        _pierce = 10;
 
         _actions[0].action = UpgradeShootSpeed;
         _actions[1].action = UpgradeShotDamage;
@@ -45,12 +43,12 @@ public class TowerCatapult : TowerBase
     }
     private void OnEnable()
     {
-        UIManager.nextRoundClicked += RoundStart;
+        StatusBarController.nextRoundClicked += RoundStart;
         EnemyBaseController.endOfRound += RoundEnd;
     }
     private void OnDisable()
     {
-        UIManager.nextRoundClicked -= RoundStart;
+        StatusBarController.nextRoundClicked -= RoundStart;
         EnemyBaseController.endOfRound -= RoundEnd;
     }
 
@@ -79,6 +77,7 @@ public class TowerCatapult : TowerBase
 
         _fireCooldown = 1f / _fireRate;
         _loadedBoulder = null;
+        SoundManager.instance.PlaySound(Sounds.CatapultLaunch);
     }
 
     public void Reload()
@@ -99,7 +98,6 @@ public class TowerCatapult : TowerBase
     {
         Vector3 towerPos = transform.position;
 
-        // Find all tiles in the scene
         BuildableTile[] tiles = FindObjectsByType<BuildableTile>(FindObjectsSortMode.None);
 
         foreach (var tile in tiles)
@@ -139,5 +137,17 @@ public class TowerCatapult : TowerBase
     private void UpgradeSpiked()
     {
         _ammo = _spikedAmmo;
+    }
+
+    protected override Action GetUpgradeAction(UpgradeType type)
+    {
+        return type switch
+        {
+            UpgradeType.ShootSpeed => UpgradeShootSpeed,
+            UpgradeType.ShotDamage => UpgradeShotDamage,
+            UpgradeType.ShotPierce => UpgradePierce,
+            UpgradeType.Spikes => UpgradeSpiked,
+            _ => base.GetUpgradeAction(type)
+        };
     }
 }

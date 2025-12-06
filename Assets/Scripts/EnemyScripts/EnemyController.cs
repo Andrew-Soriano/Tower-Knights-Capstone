@@ -1,8 +1,10 @@
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Splines;
 using Random = UnityEngine.Random;
 
@@ -17,16 +19,22 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyType type;
     private float _speed;
     private float _slow = 0;
-    private Coroutine _slowResetCoroutine;
+    private Coroutine _slowResetCoroutine = null;
 
     private float _stun = 0;
     [SerializeField, Range(0f, 1f)]
     private float _stunReduction;
     private float _stunMultiplier = 1f;
 
+    private bool _moving = true;
+
     private int _maxHP;
     private int _HP;
     private Dictionary<DamageType, float> _damageResistances;
+    private Dictionary<DamageType, float> _damageVulnerability;
+    private int _doT;
+    private Coroutine _persistResetCoroutine = null;
+    private Coroutine _delayVulnerableReset = null;
 
     [SerializeField] private int _damage;
 
@@ -34,10 +42,11 @@ public class EnemyController : MonoBehaviour
 
     public float Path_Progress { get { return _spline_anim.NormalizedTime; } }
     public int Damage { get => _damage; }
+    public EnemyType Type => type;
 
     void Awake()
     {
-        _spline_anim = GetComponent<SplineAnimate>(); //Get animation component
+        _spline_anim = GetComponent<SplineAnimate>();
         _anim_attack = Animator.StringToHash("Attack");
         _anim_death = Animator.StringToHash("Death");
         _anim_stun = Animator.StringToHash("Stun");
@@ -49,15 +58,30 @@ public class EnemyController : MonoBehaviour
         _speed = stats.Speed;
         _stunReduction = stats.StunReduction;
         _damageResistances = stats.Resistances;
+
+        _damageVulnerability = new() {
+            {DamageType.Blunt, 0f },
+            {DamageType.Pierce, 0f },
+            {DamageType.Blast, 0f }
+        };
+    }
+    void Update()
+    {
+        if (!_moving) return;
+
+        _spline_anim.NormalizedTime += (_speed * (1 - _slow)) * (Time.deltaTime / _spline_anim.Container.Spline.GetLength());
+
+        _spline_anim.NormalizedTime = Mathf.Clamp01(_spline_anim.NormalizedTime);
+
+        if (_spline_anim.NormalizedTime >= 1f)
+            _moving = false;
     }
 
     public void startPath(SplineContainer path)
     {
         _spline_anim.Container = path;
         _spline_anim.Loop = SplineAnimate.LoopMode.Once;
-        _spline_anim.MaxSpeed = _speed;
-
-        _spline_anim.Play();
+        _spline_anim.Restart(false);
     }
 
     public void trigger(int id)
@@ -74,6 +98,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int damage, DamageType type)
     {
+        Debug.Log(damage);
         _HP -= (int) (damage * (1f - _damageResistances[type]));
 
         if (_HP <= 0)
@@ -92,10 +117,8 @@ public class EnemyController : MonoBehaviour
         if (_slowResetCoroutine != null)
             StopCoroutine(_slowResetCoroutine);
 
-        _slow = Mathf.Min(_slow + slow, _speed * 0.75f); ;
-
-        _spline_anim.MaxSpeed = _speed - _slow;
-        _slowResetCoroutine = StartCoroutine(SlowRecovery(5f));
+        _slow = slow;
+        _slowResetCoroutine = StartCoroutine(SlowRecovery(3f));
     }
 
     private IEnumerator SlowRecovery(float delay)
@@ -105,6 +128,82 @@ public class EnemyController : MonoBehaviour
         _slowResetCoroutine = null;
         _spline_anim.MaxSpeed = _speed;
     }
+
+    private void TakeVulnerable(float vulnerable)
+    {
+        foreach(var kvp in _damageVulnerability)
+        {
+            _damageVulnerability[kvp.Key] = vulnerable;
+        }
+    }
+
+    private void ResetVulnerable()
+    {
+        foreach(var kvp in _damageVulnerability)
+        {
+            _damageVulnerability[kvp.Key] = 0f;
+        }
+    }
+
+    private IEnumerator DelayedResetVulnerable()
+    {
+        yield return new WaitForSeconds(1);
+        ResetVulnerable();
+    }
+
+    public void ApplyTileEffect(int damage = 0, float slow = 0, float persistTime= 0, float vulnerable = 0)
+    {
+        if (damage > 0) _doT = damage;
+        if (slow > _slow) _slow = slow;
+
+        TakeVulnerable(vulnerable);
+
+        if (persistTime > 0)
+        {
+            if (_persistResetCoroutine != null) StopCoroutine(_persistResetCoroutine);
+            _persistResetCoroutine = StartCoroutine(PersistCoroutine(persistTime));
+        }
+        else
+        {
+            if (_doT > 0) TakeDamage(_doT, DamageType.Fire);
+            _doT = 0;
+
+            TakeSlow(slow);
+
+            if(_persistResetCoroutine != null)
+            {
+                if (_delayVulnerableReset != null)
+                {
+                    StopCoroutine(_delayVulnerableReset);
+                    _delayVulnerableReset = null;
+                }
+                
+                _delayVulnerableReset = StartCoroutine(DelayedResetVulnerable());
+            }
+        }
+    }
+
+    private IEnumerator PersistCoroutine(float persistTime)
+    {
+        if (_delayVulnerableReset != null)
+        {
+            StopCoroutine(_delayVulnerableReset);
+            _delayVulnerableReset = null;
+        }
+
+        while (persistTime > 0f)
+        {
+            persistTime -= 0.5f;
+            if (_doT > 0) TakeDamage(_doT, DamageType.Fire);
+            if (_slow > 0) TakeSlow(_slow);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        _doT = 0;
+        _slow = 0;
+        _persistResetCoroutine = null;
+    }
+
 
     public void TakeStun(float stun)
     {
@@ -129,14 +228,12 @@ public class EnemyController : MonoBehaviour
     private IEnumerator DoShake(float magnitude)
     {
 
-        _spline_anim.Pause();
+        _moving = false;
         Vector3 originalPosition = transform.position;
 
         while (_stun > 0)
         {
-            transform.position = originalPosition + new Vector3(Random.Range(-.5f, .5f) * magnitude,
-                                                                       0,
-                                                                       0);
+            transform.position = originalPosition + new Vector3(Random.Range(-.5f, .5f) * magnitude, 0, 0);
 
             _stun -= Time.deltaTime;
             _animator.SetFloat(_anim_stun, _stun);
@@ -144,7 +241,7 @@ public class EnemyController : MonoBehaviour
         }
 
         transform.position = originalPosition;
-        _spline_anim.Play();
+        _moving = true;
     }
 
     public bool isDead()

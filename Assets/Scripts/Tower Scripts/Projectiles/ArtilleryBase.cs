@@ -18,17 +18,11 @@ public abstract class ArtilleryBase : AmmoBase
         if (!inAir) return;
         _t += Time.deltaTime / travelTime;
 
-        // Get linear horizontal movement
         Vector3 linearPos = Vector3.Lerp(_startPosition, _targetPosition, _t);
 
-        // Add arc (parabola)
         float height = arcHeight * (1f - Mathf.Pow(_t * 2 - 1, 2));
         linearPos.y += height;
 
         transform.position = linearPos;
-
-        // Stop in-air when we reach target
-        //if (_t >= 1f)
-            //inAir = false;
     }
 }

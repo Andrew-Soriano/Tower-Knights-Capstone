@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,7 +62,6 @@ public class TowerBomb : TowerBase
         Transform bestTarget = null;
         int maxEnemiesInRadius = 0;
 
-        // Collect all valid enemies
         List<EnemyController> enemies = new();
         foreach (Collider hit in hits)
         {
@@ -70,7 +70,6 @@ public class TowerBomb : TowerBase
                 enemies.Add(enemy);
         }
 
-        // Count how many enemies are within blast radius of each enemy
         foreach (var enemy in enemies)
         {
             int count = 0;
@@ -93,6 +92,7 @@ public class TowerBomb : TowerBase
 
     protected override void FireAt(Transform target)
     {
+        SoundManager.instance.PlaySound(Sounds.BombLaunch);
         _anim.SetTrigger(_anim_fire);
         Instantiate(_ammo,
                     _front.position,
@@ -117,5 +117,17 @@ public class TowerBomb : TowerBase
     private void UpgradeStun()
     {
         _ammo = _stunBomb;
+    }
+
+    protected override Action GetUpgradeAction(UpgradeType type)
+    {
+        return type switch
+        {
+            UpgradeType.ShootSpeed => UpgradeShootSpeed,
+            UpgradeType.ShotDamage => UpgradeShotDamage,
+            UpgradeType.BlastRadius => UpgradeBlastRadius,
+            UpgradeType.Stun => UpgradeStun,
+            _ => base.GetUpgradeAction(type)
+        };
     }
 }

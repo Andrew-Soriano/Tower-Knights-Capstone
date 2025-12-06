@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Splines;
 
 public class EnemyBaseController : MonoBehaviour
@@ -24,11 +25,11 @@ public class EnemyBaseController : MonoBehaviour
 
     private void OnEnable()
     {
-        UIManager.nextRoundClicked += StartRound;
+        StatusBarController.nextRoundClicked += StartRound;
     }
     private void OnDisable()
     {
-        UIManager.nextRoundClicked -= StartRound;
+        StatusBarController.nextRoundClicked -= StartRound;
     }
 
     private IEnumerator SpawnEnemies()
@@ -59,13 +60,11 @@ public class EnemyBaseController : MonoBehaviour
         _enemiesSpawned++;
         _enemiesAlive++;
 
-        //Assign to path
         EnemyController controller =  enemy.GetComponent<EnemyController>();
         controller.startPath(path);
         controller.onDeath += OnEnemyDied;
     }
 
-    //Start the round if there is not already a round to start
     private void StartRound()
     {
         if(_spawnRoutine == null)
@@ -76,14 +75,44 @@ public class EnemyBaseController : MonoBehaviour
                 ? waves.GetWave(roundNum).enemies
                 : Enemies;
             roundNum++;
-            UIManager.instance.StartRoundUI(roundNum);
+            UIManager.instance.StatusBarContoller.StartRoundUI(roundNum);
             _spawnRoutine = StartCoroutine(SpawnEnemies());
         }
+
+        PlayStartSound();
     }
 
     private void EndRound()
     {
         endOfRound?.Invoke();
+    }
+
+    private void PlayStartSound()
+    {
+        var enemy = Enemies[0];
+        Sounds sound;
+        int play = 0;
+        switch (enemy.GetComponent<EnemyController>().Type)
+        {
+            case EnemyType.Skeleton:
+                sound = Sounds.Bones;
+                play = 1;
+                break;
+            case EnemyType.Werewolf:
+                sound = Sounds.FootstepsMarch;
+                play = 1;
+                break;
+            case EnemyType.FrostGolem:
+                sound = Sounds.Ice;
+                play = 1;
+                break;
+            default:
+                sound = Sounds.FootstepsKnight;
+                play = 3;
+                break;
+        }
+
+        SoundManager.instance.PlayNTimes(sound, play);
     }
 
     private void OnEnemyDied()

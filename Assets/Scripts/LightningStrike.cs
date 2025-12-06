@@ -13,7 +13,6 @@ public class LightningStrike : MonoBehaviour
         if (!other.CompareTag("Enemy"))
             return;
 
-        // Spawn the lightning
         LightningBolt lightning = Instantiate(_lightningPrefab).GetComponent<LightningBolt>();
         lightning.Initialize(_startLightning, other.transform, _lightningSegments, _lightningJaggedness, _lightningDuration);
     }

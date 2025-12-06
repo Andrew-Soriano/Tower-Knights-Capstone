@@ -48,11 +48,10 @@ public class TowerBase : BuildingBase
         foreach (Collider hit in hits)
         {
             var enemy = hit.GetComponentInParent<EnemyController>();
-            //If enemy is dead, do not target
             if (enemy.isDead()) continue;
 
             Vector3 toTarget = enemy.transform.position - transform.position;
-            // Check angle
+
             if (Vector3.Angle(_front.forward, toTarget) > _fireAngle * 0.5f)
                 continue;
 
@@ -75,7 +74,7 @@ public class TowerBase : BuildingBase
     public override void OnSelect()
     {
         base.OnSelect();
-        UIManager.instance.OpenUpgradeMenu(this);
+        UIManager.instance.UpgradeMenuContoller.OpenUpgradeMenu(this);
     }
 
     public override void OnDeselect()

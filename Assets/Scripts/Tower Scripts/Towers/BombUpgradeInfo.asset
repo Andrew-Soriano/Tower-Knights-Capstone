@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c8bc912d1cf684c8940b37cbaa1e22, type: 3}
+  m_Name: BombUpgradeInfo
+  m_EditorClassIdentifier: Assembly-CSharp::TowerUpgradeInfo
+  id: 2
+  towerName: Bomb
+  description: Fires bombs that damage all targets in an explosion radius.
+  towerIcon: {fileID: 0}
+  cost:
+    wood: 10
+    planks: 0
+    stone: 0
+    bricks: 0
+    ore: 0
+    metal: 0
+    parts: 0
+  upgrades:
+  - upgrade:
+      type: 0
+      maxLevel: 3
+      name: Shoot Speed
+      description: Increase the speed of bombs fired per second.
+      icon: {fileID: 21300000, guid: f56c94ff7fd08fa4888f103928cac663, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 1
+      maxLevel: 3
+      name: Shot Damage
+      description: Bombs deal more damage per shot.
+      icon: {fileID: 21300000, guid: 55a9d4e38b559ff43ba07c10b2214894, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 6
+      maxLevel: 3
+      name: Blast Radius
+      description: Increase the area of effect of each bomb blast.
+      icon: {fileID: 21300000, guid: 285e9bc266967704690c8b0cc4015e1e, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 7
+      maxLevel: 1
+      name: Stun
+      description: Enemies in the blast radius of a bomb will stop moving for a short
+        time.
+      icon: {fileID: 21300000, guid: ad9ec72075e1444468acfbd3f2f36cf6, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0

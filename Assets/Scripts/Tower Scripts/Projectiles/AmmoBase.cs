@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class AmmoBase : MonoBehaviour
 {
-    protected Transform _targetTransform;    // For homing
-    protected Vector3 _targetPosition;       //For firing at a target position
+    protected Transform _targetTransform;
+    protected Vector3 _targetPosition;
     protected bool _hasTransformTarget;
     [SerializeField] protected DamageType _type;
     [SerializeField] protected LayerMask _enemyLayer;

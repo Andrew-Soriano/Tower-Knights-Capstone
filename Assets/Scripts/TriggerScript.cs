@@ -18,12 +18,12 @@ public class TriggerScript : MonoBehaviour
 
     private void OnEnable()
     {
-        UIManager.nextRoundClicked += ClearEnemyHash;
+        StatusBarController.nextRoundClicked += ClearEnemyHash;
     }
 
     private void OnDisable()
     {
-        UIManager.nextRoundClicked -= ClearEnemyHash;
+        StatusBarController.nextRoundClicked -= ClearEnemyHash;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +37,7 @@ public class TriggerScript : MonoBehaviour
             _alreadyTriggered.Add(enemy);
             enemy.trigger(id);
             _lightning.Strike(other);
+            SoundManager.instance.PlaySound(Sounds.Lightning);
             _parent_controller.trigger(enemy);
         }
     }

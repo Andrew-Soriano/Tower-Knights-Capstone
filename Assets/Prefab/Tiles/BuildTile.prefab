@@ -103,6 +103,7 @@ MonoBehaviour:
   _ArcherTower: {fileID: 4169213283226686221, guid: 59fe8efe177289549b56b24c949a3953, type: 3}
   _CatapultTower: {fileID: 4169213283226686221, guid: 77a666cecaead6742a902b31eea5d4ee, type: 3}
   _BombTower: {fileID: 4169213283226686221, guid: da54a49aaa672d04b820b19839d5051f, type: 3}
+  _AlchemistTower: {fileID: 4169213283226686221, guid: e9c29d8157d585146b26605237aba56f, type: 3}
   _SawmillTower: {fileID: 4169213283226686221, guid: 06d4a38ebd60f36429a5c98787f2ad61, type: 3}
 --- !u!1001 &2931071929566628257
 PrefabInstance:
@@ -152,6 +153,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ef662074591300146afcd54411732be8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c9765ee43afb9fd41a9ec39848b995c9, type: 2}
     - target: {fileID: 919132149155446097, guid: ef662074591300146afcd54411732be8, type: 3}
       propertyPath: m_Name
       value: hex_grass

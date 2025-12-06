@@ -2,20 +2,13 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum towerID
-{
-    Archer,
-    Catapult,
-    Bomb,
-    Sawmill
-}
-
 public class TowerTile : BuildableTile
 {
     [Header("Tower Prefabs")]
     [SerializeField] private GameObject _ArcherTower;
     [SerializeField] private GameObject _CatapultTower;
     [SerializeField] private GameObject _BombTower;
+    [SerializeField] private GameObject _AlchemistTower;
 
     [Header("Crafting Prefabs")]
     [SerializeField] private GameObject _SawmillTower;
@@ -23,7 +16,6 @@ public class TowerTile : BuildableTile
     public void buildTower(towerID id)
     {
         GameObject tower;
-        //Instantiate tower by id
         switch (id)
         {
             case towerID.Archer:
@@ -35,18 +27,20 @@ public class TowerTile : BuildableTile
             case towerID.Bomb:
                 tower = Instantiate(_BombTower, transform.position, Quaternion.identity);
                 break;
+            case towerID.Alchemist:
+                tower = Instantiate(_AlchemistTower, transform.position, Quaternion.identity);
+                break;
             case towerID.Sawmill:
                 tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);
                 break;
         }
 
-        //Remove this tile (tower has replaced it)
         gameObject.SetActive(false);
     }
 
     public override void OnSelect()
     {
-        UIManager.instance.OpenBuildMenu();
+        UIManager.instance.BuildMenuControler.OpenBuildMenu();
         base.OnSelect();
     }
 

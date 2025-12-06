@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808304d973031ec4da9d353d4e350294, type: 3}
+  m_Name: TowerDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::TowerDatabase
+  towers:
+  - {fileID: 11400000, guid: 61f41f4f6d5cc5344869fb33883c9743, type: 2}
+  - {fileID: 11400000, guid: 1ade69e90c13eb44cab79aacf3fc73ff, type: 2}
+  - {fileID: 11400000, guid: 879932eeb6ecb7f47aacecf0361b51b0, type: 2}
+  - {fileID: 11400000, guid: 106e9501925f0c44d8741d8e2f2475f6, type: 2}
+  - {fileID: 11400000, guid: 3ff2eef2ba3cb7640ad360e45b4226ad, type: 2}
+  - {fileID: 11400000, guid: 04eb25fc261a9f14eb27ddd5d9c5bf50, type: 2}
+  - {fileID: 11400000, guid: b209f0365602464438834afcd668e32d, type: 2}
+  - {fileID: 11400000, guid: 61c9f0ff78746064fbbd430ab38279c3, type: 2}
+  - {fileID: 11400000, guid: 8dab09d7bee93d148839bfddad7d5711, type: 2}
+  - {fileID: 11400000, guid: 2d473348104b076458121977a7f2f672, type: 2}

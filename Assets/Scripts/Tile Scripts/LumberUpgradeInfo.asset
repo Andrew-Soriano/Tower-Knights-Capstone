@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c8bc912d1cf684c8940b37cbaa1e22, type: 3}
+  m_Name: LumberUpgradeInfo
+  m_EditorClassIdentifier: Assembly-CSharp::TowerUpgradeInfo
+  id: 4
+  towerName: Lumber Yard
+  description: Cuts down tress to produce wood. It's sustainable!
+  towerIcon: {fileID: 0}
+  cost:
+    wood: 10
+    planks: 0
+    stone: 0
+    bricks: 0
+    ore: 0
+    metal: 0
+    parts: 2
+  upgrades:
+  - upgrade:
+      type: 12
+      maxLevel: 3
+      name: Faster Production
+      description: Produces raw resources an additional time per round.
+      icon: {fileID: 21300000, guid: 3454150148bdaf443bf9c30ffde46f5f, type: 3}
+    levelCosts:
+    - wood: 15
+      planks: 0
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 0
+      planks: 15
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 5
+      parts: 0
+    - wood: 0
+      planks: 10
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 5
+  - upgrade:
+      type: 13
+      maxLevel: 3
+      name: More Production
+      description: Produces additional resources every round.
+      icon: {fileID: 21300000, guid: 7b67f038e142f9f4387883574f0d04f6, type: 3}
+    levelCosts:
+    - wood: 5
+      planks: 0
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 5
+      planks: 5
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 5
+      planks: 5
+      stone: 0
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 2

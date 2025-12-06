@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c8bc912d1cf684c8940b37cbaa1e22, type: 3}
+  m_Name: AlchemistUpgradeInfo
+  m_EditorClassIdentifier: Assembly-CSharp::TowerUpgradeInfo
+  id: 3
+  towerName: Alchemist
+  description: Lays down deadly brews which debilitate enemies who step through them.
+  towerIcon: {fileID: 0}
+  cost:
+    wood: 10
+    planks: 0
+    stone: 0
+    bricks: 0
+    ore: 0
+    metal: 0
+    parts: 0
+  upgrades:
+  - upgrade:
+      type: 8
+      maxLevel: 3
+      name: Effect Up
+      description: Flask power will increase. Damage increases, and frost will slow
+        more.
+      icon: {fileID: 21300000, guid: 153ad1c324b181440a6a5382018e4f64, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 9
+      maxLevel: 3
+      name: Permanence
+      description: Effects of the alchemist flash will linger for a time, even after
+        the enemy steps off the affected tile.
+      icon: {fileID: 21300000, guid: fc024c4cae7db3e45a015763e41229c8, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 10
+      maxLevel: 3
+      name: Vulnerability
+      description: Enemies affected by flask will take increased damage from piercing,
+        blunt, and blast damage.
+      icon: {fileID: 21300000, guid: 3083c6e0ebee0004cb03fb532e3b0c68, type: 3}
+    levelCosts:
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+    - wood: 10
+      planks: 10
+      stone: 10
+      bricks: 0
+      ore: 0
+      metal: 0
+      parts: 0
+  - upgrade:
+      type: 11
+      maxLevel: 1
+      name: Frost to Fire
+      description: 'Swap out the slowing frost for a damage over time fire effect.
+        Note: No two tiles or enemies can be both chilled and on fire at the same
+        time.'
+      icon: {fileID: 21300000, guid: f05ce9836393f0d448b4ec7d1b283598, type: 3}
+    levelCosts:
+    - wood: 0
+      planks: 10
+      stone: 0
+      bricks: 50
+      ore: 0
+      metal: 0
+      parts: 10

@@ -17,7 +17,8 @@ public enum DamageType
     Pierce,
     Blunt,
     Fire,
-    Blast
+    Blast,
+    Frost
 }
 
 public class EnemyStats

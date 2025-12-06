@@ -45,6 +45,9 @@ public class CameraController : MonoBehaviour
 
     Vector3 velocity;
 
+    private LayerMask clickableLayerMask;
+
+
     public static CameraController instance;
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -120,9 +123,10 @@ public class CameraController : MonoBehaviour
             Destroy(gameObject);
         }
         
-        // Initialize target zoom to current camera zoom
         targetZoom = cam.orthographic ? cam.orthographicSize : cam.transform.localPosition.y;
         targetYaw = transform.eulerAngles.y;
+
+        clickableLayerMask = ~LayerMask.GetMask("Ground", "Enemy");
     }
 
     private void Start()
@@ -156,19 +160,16 @@ public class CameraController : MonoBehaviour
         right.y = 0;
         right.Normalize();
 
-        // WASD movement
         if (moveInput.sqrMagnitude > 0.01f)
         {
             inputDir = forward * moveInput.y + right * moveInput.x;
         }
 
-        // Middle-mouse drag panning (Only if not using WASD movement
         if (mmb && dragInput.sqrMagnitude > 0.01f)
         {
             transform.position += (-right * dragInput.x - forward * dragInput.y) * dragPanSpeed * Time.deltaTime;
         }
 
-        // Smooth acceleration
         Vector3 targetVel = inputDir * moveSpeed;
         velocity = Vector3.MoveTowards(velocity, targetVel, acceleration * Time.deltaTime);
 
@@ -177,37 +178,30 @@ public class CameraController : MonoBehaviour
 
     void HandleRotation()
     {
-        // Q/E rotation
         if (Mathf.Abs(rotateInput) > 0.01f)
         {
             if (!snapping)
             {
-                // Determine new target in 90° increments
                 float currentYaw = transform.eulerAngles.y;
                 float direction = Mathf.Sign(rotateInput);
                 targetYaw = Mathf.Round(currentYaw / 90f) * 90f + direction * 90f;
                 snapping = true;
             }
         }
-
-        // RIGHT MOUSE DRAG rotate
         else if (rmb)
         {
             float rot = lookInput.x * rotateSpeed * 0.02f;
             transform.Rotate(Vector3.up, rot, Space.World);
 
-            // Cancel snapping while dragging
             targetYaw = transform.eulerAngles.y;
             snapping = false;
         }
 
         if (snapping)
         {
-            // Smoothly interpolate rotation toward targetYaw
             float newYaw = Mathf.LerpAngle(transform.eulerAngles.y, targetYaw, snapRotateSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
 
-            // Stop snapping when close enough
             if (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetYaw)) < 0.1f)
                 snapping = false;
         }
@@ -217,14 +211,12 @@ public class CameraController : MonoBehaviour
     {
         if (Mathf.Abs(zoomInput) > 0.01f)
         {
-            // Update target zoom based on scroll input
             targetZoom -= zoomInput * zoomSpeed;
             targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
         }
 
         if (cam.orthographic)
         {
-            // Smoothly interpolate orthographic size
             cam.orthographicSize = Mathf.SmoothDamp(
                 cam.orthographicSize,
                 targetZoom,
@@ -234,7 +226,6 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            // Smoothly interpolate perspective camera height
             Vector3 pos = cam.transform.localPosition;
             pos.y = Mathf.SmoothDamp(pos.y, targetZoom, ref zoomVelocity, zoomSmoothTime);
             cam.transform.localPosition = pos;
@@ -256,21 +247,30 @@ public class CameraController : MonoBehaviour
             return;
 
         Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, clickableLayerMask))
         {
+            var current = SelectionManager.instance.GetCurrent();
 
-            if (SelectionManager.instance.GetCurrent() is TowerCatapult catapult)
+            switch (current)
             {
-                catapult.SetTarget(hit.collider.transform.position);
-                SelectionManager.instance.Deselect();
-                return;
-            }
+                case TowerCatapult catapult:
+                    catapult.SetTarget(hit.collider.transform.position);
+                    SelectionManager.instance.Deselect();
+                    break;
 
-            if (hit.collider.TryGetComponent<IClickable>(out var clickable))
-            {
-                clickable.OnClicked();
-            }
+                case TowerAlchemist alchemist:
+                    hit.transform.TryGetComponent<UnBuildableTile>(out var tile);
+                    alchemist.SetTarget(tile);
+                    SelectionManager.instance.Deselect();
+                    break;
 
+                default:
+                    if (hit.collider.TryGetComponent<IClickable>(out var clickable))
+                    {
+                        clickable.OnClicked();
+                    }
+                    break;
+            }
         }
     }
 
@@ -282,13 +282,13 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator ResetIgnoreClick()
     {
-        yield return null; // wait 1 frame
+        yield return null;
         _ignoreNextClick = false;
     }
 
     private bool IsPointerOverUI()
     {
-        var menu = UIManager.instance.currentMenu;
+        var menu = UIManager.instance.CurrentMenu;
         if (menu == null || menu.panel == null)
             return false;
 

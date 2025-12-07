@@ -21,9 +21,9 @@ MonoBehaviour:
     wood: 0
     planks: 0
     stone: 0
-    bricks: 0
+    bricks: 5
     ore: 0
-    metal: 10
+    metal: 0
     parts: 2
   upgrades:
   - upgrade:

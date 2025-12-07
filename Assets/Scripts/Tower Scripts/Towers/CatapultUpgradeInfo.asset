@@ -18,8 +18,8 @@ MonoBehaviour:
   towerIcon: {fileID: 21300000, guid: c545e7f7155b0174a95435c798e45655, type: 3}
   cost:
     wood: 10
-    planks: 0
-    stone: 0
+    planks: 10
+    stone: 5
     bricks: 0
     ore: 0
     metal: 0

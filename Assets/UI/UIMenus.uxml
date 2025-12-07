@@ -29,7 +29,7 @@
                 <ui:Button text="Quit" name="VictoryQuitButton" style="width: 20%; height: 20%;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px; display: none;">
+        <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px; display: flex;">
             <ui:VisualElement name="IconsContainer" class="IconContainer">
                 <ui:VisualElement name="WoodGroup" class="StatusResourceGroup">
                     <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />

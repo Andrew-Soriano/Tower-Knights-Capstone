@@ -31,6 +31,12 @@ public class UnBuildableTile : MonoBehaviour, IClickable, ISelectable
 
     void Awake()
     {
+        if (!Application.isPlaying) return;
+        if (_tileRenderer == null)
+        {
+            Debug.LogError($"{name} is missing _tileRenderer!", this);
+            return;
+        }
         originalColor = _tileRenderer.material.color;
         _particles = new Dictionary<DamageType, ParticleSystem>
         {
@@ -39,9 +45,18 @@ public class UnBuildableTile : MonoBehaviour, IClickable, ISelectable
         };
     }
 
-    public void Highlight(Color color) => _tileRenderer.material.color = color;
+    public void Highlight(Color color)
+    {
+        if (!Application.isPlaying) return;
+        _tileRenderer.material.color = color;
+    }
 
-    public void ResetHighlight() => _tileRenderer.material.color = originalColor;
+    public void ResetHighlight()
+    {
+
+        if (!Application.isPlaying) return;
+        _tileRenderer.material.color = originalColor;
+    }
 
     public void OnClicked() => SelectionManager.instance.Select(this);
 

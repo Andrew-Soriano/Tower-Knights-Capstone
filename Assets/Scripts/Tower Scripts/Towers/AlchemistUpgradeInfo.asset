@@ -17,12 +17,12 @@ MonoBehaviour:
   description: Lays down deadly brews which debilitate enemies who step through them.
   towerIcon: {fileID: 21300000, guid: 92dac7cc24d3501469ba4f4dc3a09d03, type: 3}
   cost:
-    wood: 10
-    planks: 0
+    wood: 0
+    planks: 10
     stone: 0
     bricks: 0
     ore: 0
-    metal: 0
+    metal: 5
     parts: 0
   upgrades:
   - upgrade:

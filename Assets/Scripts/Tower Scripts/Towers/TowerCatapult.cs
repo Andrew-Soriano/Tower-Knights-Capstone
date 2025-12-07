@@ -99,10 +99,11 @@ public class TowerCatapult : TowerBase
     {
         Vector3 towerPos = transform.position;
 
-        BuildableTile[] tiles = FindObjectsByType<BuildableTile>(FindObjectsSortMode.None);
+        TowerTile[] tiles = FindObjectsByType<TowerTile>(FindObjectsSortMode.None);
 
         foreach (var tile in tiles)
         {
+
             float distance = Vector3.Distance(towerPos, tile.transform.position);
 
             if (tile.transform.position == _target)
@@ -115,7 +116,7 @@ public class TowerCatapult : TowerBase
     }
     public void ClearTargetRange()
     {
-        BuildableTile[] tiles = FindObjectsByType<BuildableTile>(FindObjectsSortMode.None);
+        TowerTile[] tiles = FindObjectsByType<TowerTile>(FindObjectsSortMode.None);
         foreach (var tile in tiles)
             tile.ResetHighlight();
     }

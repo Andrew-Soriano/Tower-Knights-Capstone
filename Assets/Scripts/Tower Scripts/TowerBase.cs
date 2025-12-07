@@ -13,7 +13,7 @@ public class TowerBase : BuildingBase
     [SerializeField] protected float _fireAngle = 90f;
     [SerializeField] protected float _fireRange = 5f;
     [SerializeField] protected float _fireRate = 1f;
-    [SerializeField] protected int _damage = 0;
+    [SerializeField] protected int _damage = 10;
 
     [Header("Layers")]
     [SerializeField] protected LayerMask _enemyLayer;

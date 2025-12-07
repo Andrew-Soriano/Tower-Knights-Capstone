@@ -15,20 +15,6 @@ MonoBehaviour:
   waves:
   - enemies:
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    segments:
-    - count: 1
-      delay: 0.5
-  - enemies:
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    segments:
-    - count: 5
-      delay: 1
-  - enemies:
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
     - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
@@ -50,16 +36,36 @@ MonoBehaviour:
     - count: 5
       delay: 0.5
   - enemies:
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
-    - {fileID: 5899084372827666698, guid: 317ead1db504e9d40b8b31a7e5c1e394, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+    - count: 5
+      delay: 0.5
+    - count: 1
+      delay: 5
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
     segments:
     - count: 10
       delay: 0.5
@@ -220,3 +226,243 @@ MonoBehaviour:
     segments:
     - count: 15
       delay: 0.5
+  - enemies:
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4109735253966016437, guid: 65bbd08c94e38fe408ad34f0b7f605c7, type: 3}
+    - {fileID: 4109735253966016437, guid: 65bbd08c94e38fe408ad34f0b7f605c7, type: 3}
+    - {fileID: 4109735253966016437, guid: 65bbd08c94e38fe408ad34f0b7f605c7, type: 3}
+    - {fileID: 4109735253966016437, guid: 65bbd08c94e38fe408ad34f0b7f605c7, type: 3}
+    - {fileID: 4109735253966016437, guid: 65bbd08c94e38fe408ad34f0b7f605c7, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    segments:
+    - count: 10
+      delay: 1
+    - count: 10
+      delay: 0.5
+    - count: 5
+      delay: 1
+    - count: 5
+      delay: 1
+  - enemies:
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    segments:
+    - count: 10
+      delay: 0.5
+  - enemies:
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    segments:
+    - count: 10
+      delay: 0.5
+    - count: 5
+      delay: 1
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    segments:
+    - count: 1
+      delay: 1
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    segments:
+    - count: 1
+      delay: 1
+    - count: 9
+      delay: 0.5
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    segments:
+    - count: 1
+      delay: 1
+    - count: 13
+      delay: 0.5
+    - count: 1
+      delay: 1
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    segments:
+    - count: 5
+      delay: 5
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    - {fileID: 3157394400562674964, guid: 9e9e51ea530572841911bdf999a53df7, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+    - count: 20
+      delay: 0.5
+  - enemies:
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 4344388708673691092, guid: a440b76cd63852748a62edd837b67da4, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+    - count: 5
+      delay: 0.5
+    - count: 1
+      delay: 5
+  - enemies:
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7264644637263480161, guid: 8d24ede8a4c8b2d4099dd13d2b29be08, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+    - count: 9
+      delay: 0.5
+    - count: 1
+      delay: 5
+  - enemies:
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    segments:
+    - count: 5
+      delay: 1
+  - enemies:
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    - {fileID: 4412817562337576262, guid: 749534f31c2776b40ba8eb17f8abf5a5, type: 3}
+    - {fileID: 7255926997723746858, guid: a63432db25682974396ae3d00fddd3b2, type: 3}
+    segments:
+    - count: 5
+      delay: 1

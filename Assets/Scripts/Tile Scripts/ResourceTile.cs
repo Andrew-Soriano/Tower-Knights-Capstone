@@ -32,4 +32,14 @@ public class ResourceTile : BuildableTile
         UIManager.instance.CloseMenu();
         base.OnSelect();
     }
+
+    public new void Highlight(Color color)
+    {
+
+    }
+
+    public new void ResetHighlight()
+    {
+
+    }
 }

@@ -78,7 +78,7 @@ MonoBehaviour:
   _fireAngle: 90
   _fireRange: 5
   _fireRate: 0.4
-  _damage: 10
+  _damage: 1
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64

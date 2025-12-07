@@ -8,18 +8,17 @@ using UnityEngine;
 public class ResourceTile : BuildableTile
 {
     public ResourceType type;
-    public int amountPerRound;
     public string tileName;
+    public GameObject _builtPrefab;
 
-    private bool _built = false;
+    public static event Action<Resources> resourceBuilt;
 
-    private void OnEnable()
+    public void buildResource(towerID id)
     {
-        StatusBarController.nextRoundClicked += AddResource;
-    }
-    private void OnDisable()
-    {
-        StatusBarController.nextRoundClicked -= AddResource;
+        GameObject tower = Instantiate(_builtPrefab, this.WorldPosition, Quaternion.identity);
+
+        resourceBuilt?.Invoke(TowerDatabase.GetTowerStatic(id).cost);
+        gameObject.SetActive(false);
     }
 
     public override void OnSelect()
@@ -32,22 +31,5 @@ public class ResourceTile : BuildableTile
     {
         UIManager.instance.CloseMenu();
         base.OnSelect();
-    }
-
-    public void BuildResource()
-    {
-        if (!_built)
-        {
-            _built = true;
-            _switchMode(1);
-        }
-    }
-
-    private void AddResource()
-    {
-        if (_built)
-        {
-            CastleController.instance.AddResourceToStock(type, amountPerRound);
-        }
     }
 }

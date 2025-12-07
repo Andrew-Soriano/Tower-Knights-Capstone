@@ -62,7 +62,8 @@ public class bombTimer : MissileBase
             processed.Add(enemy);
             enemy.TakeDamage(_damage, _type);
             enemy.TakeStun(_stun);
-            SoundManager.instance.PlaySound(Sounds.Explode);
+            Debug.Log(SoundManager.instance);
+            SoundManager.instance.PlaySFX(Sounds.Explode);
         }
         Destroy(gameObject);
         return Instantiate(Xplosion, detonationCord.position, transform.rotation);

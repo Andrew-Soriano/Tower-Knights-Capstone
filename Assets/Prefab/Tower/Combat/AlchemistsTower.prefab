@@ -78,12 +78,13 @@ MonoBehaviour:
   _fireAngle: 90
   _fireRange: 5
   _fireRate: 0.4
-  _damage: 1
+  _damage: 10
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   _fireAmmo: {fileID: 483498042547705549, guid: 6902f0a465268c74aad724886e1d0d9c, type: 3}
   _slow: 0.5
+  _persist: 0
 --- !u!1 &8857369479450053074
 GameObject:
   m_ObjectHideFlags: 0

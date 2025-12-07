@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 public interface ISelectable
 {
@@ -10,6 +11,8 @@ public class SelectionManager : MonoBehaviour
     public static SelectionManager instance;
 
     private ISelectable _current;
+
+    public static event Action OnSelectionSwitch;
 
     void Awake()
     {
@@ -30,7 +33,10 @@ public class SelectionManager : MonoBehaviour
             return;
 
         if (_current != null)
+        {
             _current.OnDeselect();
+            OnSelectionSwitch?.Invoke();
+        }
 
         _current = target;
 

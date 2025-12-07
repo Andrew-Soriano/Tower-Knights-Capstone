@@ -51,17 +51,6 @@ public class BuildMenuController : MonoBehaviour
                 Debug.LogWarning($"UIManager: Could not find button for {id}");
                 continue;
             }
-            var labels = new Dictionary<ResourceType, Label>();
-
-            /*foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
-            {
-                var label = towerGroup.Q<Label>($"{id}{type}Count");
-                if (label != null)
-                {
-                    label.text = towerData.cost.GetAmount(type).ToString("D2");
-                    labels[type] = label;
-                }
-            }*/
 
             var icon = towerGroup.Q<VisualElement>("Icon");
             if (button == null)
@@ -100,7 +89,15 @@ public class BuildMenuController : MonoBehaviour
 
             UIManager.RegisterSafeClick(kvp.Value.button, () => OnBuildTowerPressed(id));
         }
+
+        SelectionManager.OnSelectionSwitch += RefreshButtonState;
     }
+
+    private void OnDisable()
+    {
+        SelectionManager.OnSelectionSwitch -= RefreshButtonState;
+    }
+
     public void OpenBuildMenu()
     {
         UIManager.OpenMenu(buildMenu);
@@ -111,29 +108,7 @@ public class BuildMenuController : MonoBehaviour
         if (CastleController?.stockpile == null)
             Debug.LogError("BuildMenuController: CastleController.stockpile is null!");
 
-        /*foreach (var kvp in _buildTowers)
-        {
-            if (kvp.Value.resourceLabels == null)
-            {
-                Debug.LogWarning($"BuildMenuController: resourceLabels for {kvp.Key} is null!");
-                continue;
-            }
-
-            foreach (var labelKvp in kvp.Value.resourceLabels)
-            {
-                if (labelKvp.Value == null)
-                {
-                    Debug.LogWarning($"BuildMenuController: label for {labelKvp.Key} on {kvp.Key} is null!");
-                    continue;
-                }
-
-                labelKvp.Value.style.color = new StyleColor(
-                    CastleController.stockpile.GetAmount(labelKvp.Key) >= kvp.Value.cost.GetAmount(labelKvp.Key)
-                        ? Color.white
-                        : Color.gray
-                );
-            }
-        }*/
+        RefreshButtonState();
     }
 
     private void ShowHoverMenu(towerID id, Button button)
@@ -156,7 +131,8 @@ public class BuildMenuController : MonoBehaviour
 
     private void OnBuildTowerPressed(towerID id)
     {
-        if (SelectionManager.instance.GetCurrent() is TowerTile tile)
+        var current = SelectionManager.instance.GetCurrent();
+        if (current is TowerTile tile)
         {
             if (CastleController.BuildTower(tile, id))
             {
@@ -168,6 +144,69 @@ public class BuildMenuController : MonoBehaviour
                 Resources missing = CastleController.stockpile.MissingResources(_buildTowers[id].cost);
                 UIManager.StatusBarContoller.FlashMissingLabel(missing);
             }
+        }
+        else if (current is ResourceTile resourceTile)
+        {
+            if (IsMatchingResourceTower(id, resourceTile.type))
+            {
+                if (CastleController.BuildResource(resourceTile, id))
+                {
+                    UIManager.StatusBarContoller.RefreshResourceUI(CastleController.stockpile);
+                    SelectionManager.instance.Deselect();
+                }
+                else
+                {
+                    Resources missing = CastleController.stockpile.MissingResources(_buildTowers[id].cost);
+                    UIManager.StatusBarContoller.FlashMissingLabel(missing);
+                }
+            }
+        }
+    }
+
+    private bool IsMatchingResourceTower(towerID id, ResourceType type)
+    {
+        return (id == towerID.Lumberyard && type == ResourceType.Wood) ||
+               (id == towerID.Quarry && type == ResourceType.Stone) ||
+               (id == towerID.Mine && type == ResourceType.Ore);
+    }
+
+    private void RefreshButtonState()
+    {
+        foreach (var kvp in _buildTowers)
+        {
+            var button = kvp.Value.button;
+            var id = kvp.Key;
+
+            bool shouldEnable = true;
+
+            var current = SelectionManager.instance.GetCurrent();
+
+            if (current is TowerTile
+                && (id == towerID.Lumberyard || id == towerID.Mine || id == towerID.Quarry))
+            {
+                shouldEnable = false;
+            }
+            else if(current is ResourceTile resource)
+            {
+                switch (resource.type)
+                {
+                    case ResourceType.Wood:
+                        if (id != towerID.Lumberyard) shouldEnable = false;
+                        break;
+
+                    case ResourceType.Stone:
+                        if (id != towerID.Quarry) shouldEnable = false;
+                        break;
+
+                    case ResourceType.Ore:
+                        if (id != towerID.Mine) shouldEnable = false;
+                        break;
+                }
+            }
+
+            var group = button.parent;
+            button.SetEnabled(shouldEnable);
+            group.style.opacity = shouldEnable ? 1f : 0.4f;
         }
     }
 }

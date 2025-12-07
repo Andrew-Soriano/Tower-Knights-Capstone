@@ -70,20 +70,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CratingBase
   _buildingModel: {fileID: 6159634938729932007}
   _defaultMode: 0
-  _icon1: {fileID: 0}
-  _icon2: {fileID: 0}
-  _icon3: {fileID: 0}
-  _icon4: {fileID: 0}
-  _name1: 
-  _name2: 
-  _name3: 
-  _name4: 
-  _description1: 
-  _description2: 
-  _description3: 
-  _description4: 
-  _amount: 1
-  _cost: 1
+  id: 0
+  actions: []
+  _amount: 5
+  _cost: 5
   _type: 3
   _costType: 2
 --- !u!1001 &6465482992026917302

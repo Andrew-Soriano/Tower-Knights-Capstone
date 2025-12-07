@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 1
   towerName: Catapult
   description: Fires boulders that roll over enemies in a straight line.
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: c545e7f7155b0174a95435c798e45655, type: 3}
   cost:
     wood: 10
     planks: 0

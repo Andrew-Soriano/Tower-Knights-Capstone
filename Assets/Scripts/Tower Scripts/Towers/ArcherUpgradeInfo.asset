@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 0
   towerName: Archer
   description: Fires arrows to attack enemies with precision.
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: c1e265991ce2ce340a2f004825a8ac76, type: 3}
   cost:
     wood: 10
     planks: 0

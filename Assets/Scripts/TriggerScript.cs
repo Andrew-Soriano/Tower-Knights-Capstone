@@ -37,7 +37,8 @@ public class TriggerScript : MonoBehaviour
             _alreadyTriggered.Add(enemy);
             enemy.trigger(id);
             _lightning.Strike(other);
-            SoundManager.instance.PlaySound(Sounds.Lightning);
+            Debug.Log(SoundManager.instance);
+            SoundManager.instance.PlaySFX(Sounds.Lightning);
             _parent_controller.trigger(enemy);
         }
     }

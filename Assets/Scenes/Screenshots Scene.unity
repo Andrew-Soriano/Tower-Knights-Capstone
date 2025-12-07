@@ -119,63 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &23555658
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.176658
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.2758799
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 11.647073
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00000008146034
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
-      propertyPath: m_Name
-      value: Stone_Bricks_Stack_Small
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2cfab40c8e552d84289e50bfad7a5776, type: 3}
 --- !u!1 &681090185
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,13 +351,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099403933}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.43438, y: 0, z: 12.04547}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalRotation: {x: 0.15428677, y: -0, z: -0, w: 0.98802614}
+  m_LocalPosition: {x: 6.43438, y: -0.000018607663, z: 12.04547}
+  m_LocalScale: {x: 1000, y: 1000, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.751, y: 0, z: 0}
 --- !u!1 &1547919222
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,13 +444,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547919222}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30837977, y: 0.27163765, z: -0.09236033, w: 0.9069645}
-  m_LocalPosition: {x: 5.4326334, y: 1.4012504, z: 10.523134}
+  m_LocalRotation: {x: -0.020376377, y: 0.9655936, z: -0.25382105, w: -0.052807763}
+  m_LocalPosition: {x: 9.39, y: 3.84, z: 22.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 39.9, y: 15, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.494, y: 186.043, z: -0.826}
 --- !u!114 &1547919226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,4 +502,3 @@ SceneRoots:
   - {fileID: 1547919225}
   - {fileID: 681090187}
   - {fileID: 1099403937}
-  - {fileID: 23555658}

@@ -92,7 +92,8 @@ public class TowerBomb : TowerBase
 
     protected override void FireAt(Transform target)
     {
-        SoundManager.instance.PlaySound(Sounds.BombLaunch);
+        Debug.Log(SoundManager.instance);
+        SoundManager.instance.PlaySFX(Sounds.BombLaunch);
         _anim.SetTrigger(_anim_fire);
         Instantiate(_ammo,
                     _front.position,

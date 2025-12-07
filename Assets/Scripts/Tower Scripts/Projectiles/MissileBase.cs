@@ -17,7 +17,9 @@ public abstract class MissileBase : AmmoBase
 
     protected void MoveTowards(Vector3 dest)
     {
-        Vector3 dir = (dest - transform.position).normalized;
+        Vector3 dir = (dest - transform.position);
+        dir.y = 0;
+        dir.Normalize();
         transform.position += dir * speed * Time.deltaTime;
 
         if (dir.sqrMagnitude > 0.001f)

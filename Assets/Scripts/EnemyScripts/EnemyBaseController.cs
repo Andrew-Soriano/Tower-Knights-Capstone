@@ -9,6 +9,7 @@ using UnityEngine.Splines;
 public class EnemyBaseController : MonoBehaviour
 {
     public static event Action endOfRound;
+    public static event Action victory;
     [Header("Path")]
     public SplineContainer path;
 
@@ -55,7 +56,9 @@ public class EnemyBaseController : MonoBehaviour
 
     private void SpawnEnemy(int i)
     {
-        GameObject enemy = Instantiate(Enemies[i]);
+        if (i >= Enemies.Count)
+            return;
+        GameObject enemy = Instantiate(Enemies[i], this.transform.position, this.transform.rotation);
 
         _enemiesSpawned++;
         _enemiesAlive++;
@@ -84,6 +87,11 @@ public class EnemyBaseController : MonoBehaviour
 
     private void EndRound()
     {
+        if (roundNum >= waves.WaveCount)
+        {
+            victory?.Invoke();
+            return;
+        }
         endOfRound?.Invoke();
     }
 
@@ -91,28 +99,23 @@ public class EnemyBaseController : MonoBehaviour
     {
         var enemy = Enemies[0];
         Sounds sound;
-        int play = 0;
         switch (enemy.GetComponent<EnemyController>().Type)
         {
             case EnemyType.Skeleton:
                 sound = Sounds.Bones;
-                play = 1;
                 break;
             case EnemyType.Werewolf:
                 sound = Sounds.FootstepsMarch;
-                play = 1;
                 break;
             case EnemyType.FrostGolem:
                 sound = Sounds.Ice;
-                play = 1;
                 break;
             default:
-                sound = Sounds.FootstepsKnight;
-                play = 3;
+                sound = Sounds.FootstepsMarch;
                 break;
         }
 
-        SoundManager.instance.PlayNTimes(sound, play);
+        SoundManager.instance.PlaySFX(sound);
     }
 
     private void OnEnemyDied()

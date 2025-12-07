@@ -14,21 +14,21 @@ public class EnemyData : ScriptableObject
         });
     public static readonly EnemyStats orc = new EnemyStats(10, 1, 3, 0.1f,
         new Dictionary<DamageType, float>{
-            { DamageType.Blunt, 0f },
-            {DamageType.Pierce, -.1f },
+            { DamageType.Blunt, -.1f },
+            {DamageType.Pierce, 0f },
             {DamageType.Fire, 0f},
             {DamageType.Blast, 0f },
             {DamageType.Frost, 0f }
         });
-    public static readonly EnemyStats werewolf = new EnemyStats(10, 1, 6, 0.1f,
+    public static readonly EnemyStats werewolf = new EnemyStats(15, 1, 6, 0.1f,
         new Dictionary<DamageType, float>{
-            { DamageType.Blunt, 0f },
+            { DamageType.Blunt, -.2f },
             {DamageType.Pierce, 0f },
             {DamageType.Fire, -.1f},
             {DamageType.Blast, 0f },
             {DamageType.Frost, 0f }
         });
-    public static readonly EnemyStats blackKnight = new EnemyStats(60, 10, 2, 0.3f,
+    public static readonly EnemyStats blackKnight = new EnemyStats(200, 10, 2, 0.3f,
         new Dictionary<DamageType, float>{
             { DamageType.Blunt, .5f },
             {DamageType.Pierce, .2f },
@@ -52,7 +52,7 @@ public class EnemyData : ScriptableObject
             {DamageType.Blast, 0f },
             {DamageType.Frost, .1f }
         });
-    public static readonly EnemyStats frostGolem = new EnemyStats(100, 5, 2, 0.5f,
+    public static readonly EnemyStats frostGolem = new EnemyStats(200, 5, 2, 0.5f,
         new Dictionary<DamageType, float>{
             { DamageType.Blunt, .4f },
             {DamageType.Pierce, .4f },

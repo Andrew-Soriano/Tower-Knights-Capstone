@@ -77,7 +77,8 @@ public class TowerCatapult : TowerBase
 
         _fireCooldown = 1f / _fireRate;
         _loadedBoulder = null;
-        SoundManager.instance.PlaySound(Sounds.CatapultLaunch);
+        Debug.Log(SoundManager.instance);
+        SoundManager.instance.PlaySFX(Sounds.CatapultLaunch);
     }
 
     public void Reload()

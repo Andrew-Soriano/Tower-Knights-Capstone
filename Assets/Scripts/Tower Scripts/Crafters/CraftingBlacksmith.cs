@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CratingBlacksmith : CraftingBase
@@ -5,12 +6,49 @@ public class CratingBlacksmith : CraftingBase
     protected override void Awake()
     {
         base.Awake();
-        if (_type != ResourceType.Metal && _type != ResourceType.Parts)
-            _type = ResourceType.Metal;
+        if (type != ResourceType.Metal && type != ResourceType.Parts)
+            type = ResourceType.Metal;
     }
 
-    public void OnSwitchType()
+    protected override Action GetUpgradeAction(UpgradeType type)
     {
-        _type = _type == ResourceType.Metal ? ResourceType.Parts : ResourceType.Metal;
+        return type switch
+        {
+            UpgradeType.MoreProduction => UpgradeMoreProduction,
+            UpgradeType.FasterProduction => UpgradeFasterProduction,
+            UpgradeType.ProduceParts => UpgradeProduceParts,
+            _ => base.GetUpgradeAction(type)
+        };
+    }
+
+
+    private void OnEnable()
+    {
+        StatusBarController.nextRoundClicked += AddResource;
+    }
+    private void OnDisable()
+    {
+        StatusBarController.nextRoundClicked -= AddResource;
+    }
+
+    private void AddResource()
+    {
+        CastleController.instance.AddResourceToStock(type, amountPerRound * multiplier);
+    }
+
+    private void UpgradeFasterProduction()
+    {
+        amountPerRound += 10;
+    }
+
+    private void UpgradeMoreProduction()
+    {
+        multiplier++;
+    }
+
+    public void UpgradeProduceParts()
+    {
+        amountPerRound /= 2;
+        type = ResourceType.Parts;
     }
 }

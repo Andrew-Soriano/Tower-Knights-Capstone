@@ -82,8 +82,9 @@ public class UIManager : MonoBehaviour
         if (_safeClickHandlers.TryGetValue(button, out var existing))
             button.clicked -= existing;
 
-        _safeClickHandlers[button] = () => SafeButtonClick(action);
-        button.clicked += _safeClickHandlers[button];
+        void handler() => SafeButtonClick(action);
+        _safeClickHandlers[button] = handler;
+        button.clicked += handler;
     }
 
     private void SafeButtonClick(Action action)

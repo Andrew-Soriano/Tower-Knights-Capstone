@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 6
   towerName: Mine
   description: Digs deep in search of ore.
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: 260f30ffc9aabf148a0a24846e18c8d5, type: 3}
   cost:
     wood: 0
     planks: 0

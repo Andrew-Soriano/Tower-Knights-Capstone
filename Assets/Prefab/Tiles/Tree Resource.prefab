@@ -98,7 +98,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2059740427814951508}
   - {fileID: 3397960552462249546}
   - {fileID: 8815019882893449858}
   - {fileID: 2964408409079409407}
@@ -137,11 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d8b7ba5ef53dd4490c411f05a77aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceTile
-  _defaultMode: 0
   _tileRenderer: {fileID: 4570264950740784421}
   type: 0
-  amountPerRound: 1
   tileName: Lumber Yard
+  _builtPrefab: {fileID: 2253300184821146240, guid: 68e3009b421b6ac4db28896c0e49e5dd, type: 3}
 --- !u!1001 &475508645381657234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,72 +201,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5d34e20c2ceabfc42a125f44549c735c, type: 3}
   m_PrefabInstance: {fileID: 475508645381657234}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1954301091111157183
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4252711445017679164}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00000008146034
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_Name
-      value: building_lumbermill_blue
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-      propertyPath: m_TagString
-      value: Mode_A
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
---- !u!4 &2059740427814951508 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9edfd9cb93aa02a4d9115a89828cbc69, type: 3}
-  m_PrefabInstance: {fileID: 1954301091111157183}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2175810274371904695
 PrefabInstance:

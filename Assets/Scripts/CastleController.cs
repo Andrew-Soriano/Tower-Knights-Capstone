@@ -33,6 +33,18 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         UIManager.instance.StatusBarContoller.RefreshCastleHP(_HP, _maxHP);
     }
 
+    private void OnEnable()
+    {
+        TowerTile.towerBuilt += PayForBuild;
+        ResourceTile.resourceBuilt += PayForBuild;
+    }
+
+    private void OnDisable()
+    {
+        TowerTile.towerBuilt -= PayForBuild;
+        ResourceTile.resourceBuilt -= PayForBuild;
+    }
+
     public void OnClicked()
     {
         SelectionManager.instance.Select(this);
@@ -62,12 +74,23 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
         Resources cost = towerData.cost;
         if (stockpile.HasResources(cost))
         {
-            stockpile.Pay(cost);
-
             tile.buildTower(id);
             return true;
         }
         
+        return false;
+    }
+
+    public bool BuildResource(ResourceTile tile, towerID id)
+    {
+        var towerData = TowerDatabase.Instance.GetTower(id);
+        Resources cost = towerData.cost;
+        if (stockpile.HasResources(cost))
+        {
+            tile.buildResource(id);
+            return true;
+        }
+
         return false;
     }
 
@@ -100,6 +123,12 @@ public class CastleController : MonoBehaviour, IClickable, ISelectable
     public void SubtractFromStock(ResourceType type, int amount)
     {
         stockpile.Subtract(type, amount);
+        UIManager.instance.StatusBarContoller.RefreshResourceUI(CastleController.instance.stockpile);
+    }
+
+    private void PayForBuild(Resources cost)
+    {
+        stockpile.Pay(cost);
         UIManager.instance.StatusBarContoller.RefreshResourceUI(CastleController.instance.stockpile);
     }
 }

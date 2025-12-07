@@ -5,7 +5,15 @@
             <ui:Label text="Tower Knights" name="MainMenuLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />
             <ui:VisualElement name="MainMenuButtonGroup" style="flex-grow: 1; flex-direction: row; justify-content: center; top: auto; height: auto; margin-bottom: 10%; margin-top: 10%;">
                 <ui:Button text="Start" name="MainMenuStartButton" style="width: 20%; height: 20%;" />
+                <ui:Button text="Turtorial" name="MainMenuTutorialButton" style="width: 20%; height: 20%;" />
             </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="TutorialMenu" style="flex-grow: 0; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
+            <ui:Button text="Back" name="TutorialBackButton" style="width: 20%; height: 20%; position: absolute; right: 7px; top: 4px;" />
+            <ui:ScrollView style="position: absolute; top: 83px; left: 0; right: 0; bottom: 20px; overflow: auto;">
+                <ui:Label name="TutorialLabel" style="-unity-text-align: upper-left; font-size: 18px; color: white; white-space: normal;" />
+            </ui:ScrollView>
+            <ui:Label text="Tutorial" style="-unity-text-outline-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 28px; -unity-text-align: upper-center;" />
         </ui:VisualElement>
         <ui:VisualElement name="GameOverMenu" style="flex-grow: 0; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 25%; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
             <ui:Label text="Game Over" name="GameOverLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />
@@ -14,7 +22,14 @@
                 <ui:Button text="Quit" name="GameOverQuitButton" style="width: 20%; height: 20%;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px;">
+        <ui:VisualElement name="VictoryMenu" style="flex-grow: 0; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 25%; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
+            <ui:Label text="A Winner Is You!" name="VictoryLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />
+            <ui:VisualElement name="VictoryButtonGroup" style="flex-grow: 1; flex-direction: row; justify-content: center; top: auto; height: auto; margin-bottom: 10%; margin-top: 10%;">
+                <ui:Button text="Restart" name="VictoryRestartGameButton" style="width: 20%; height: 20%;" />
+                <ui:Button text="Quit" name="VictoryQuitButton" style="width: 20%; height: 20%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="StatusBar" class="StatusBar" style="top: 9px; display: none;">
             <ui:VisualElement name="IconsContainer" class="IconContainer">
                 <ui:VisualElement name="WoodGroup" class="StatusResourceGroup">
                     <ui:VisualElement name="WoodIcon" class="StatusResourceIcon" style="background-image: url(&quot;project://database/Assets/Resources/Icons/Resources/Icon_Wood.png?fileID=21300000&amp;guid=fefe1f1f5e732b5439c7dce427d26e5a&amp;type=3#Icon_Wood&quot;);" />
@@ -74,7 +89,7 @@
                                 <ui:Button name="Button" class="upgrade_click_area" />
                             </ui:VisualElement>
                         </ui:VisualElement>
-                        <ui:VisualElement name="BomberGroup" class="upgrade_container">
+                        <ui:VisualElement name="BombGroup" class="upgrade_container">
                             <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
                                 <ui:VisualElement name="Icon" class="upgrade_icon" />
                                 <ui:Button name="Button" class="upgrade_click_area" />
@@ -109,7 +124,7 @@
                     </ui:VisualElement>
                 </ui:Tab>
                 <ui:Tab label="Resources" name="ResourcesTab" closeable="false">
-                    <ui:VisualElement name="ResourceGrid" style = "flex-direction: row; flex-wrap: wrap; justify-content: space-between;">
+                    <ui:VisualElement name="ResourceGrid" style="flex-direction: row; flex-wrap: wrap; justify-content: space-between;">
                         <ui:VisualElement name="LumberyardGroup" class="upgrade_container">
                             <ui:VisualElement name="TowerButtonGroup" class="upgrade_button">
                                 <ui:VisualElement name="Icon" class="upgrade_icon" />

@@ -104,7 +104,7 @@ public class EnemyController : MonoBehaviour
         if (_HP <= 0)
         {
             _animator.SetTrigger(_anim_death);
-            _spline_anim.Pause();
+            _moving = false;
             foreach (Collider col in GetComponentsInChildren<Collider>())
             {
                 col.enabled = false;

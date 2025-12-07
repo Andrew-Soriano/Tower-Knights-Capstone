@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 4
   towerName: Lumber Yard
   description: Cuts down tress to produce wood. It's sustainable!
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: a7baced2acf362d49be9cf75a97baff7, type: 3}
   cost:
     wood: 10
     planks: 0

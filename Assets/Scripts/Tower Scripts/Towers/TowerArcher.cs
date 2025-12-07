@@ -28,7 +28,8 @@ public class TowerArcher : TowerBase
             if (target != null)
             {
                 FlashRotateTurret(target.position);
-                SoundManager.instance.PlaySound(Sounds.ArrowLaunch);
+                Debug.Log(SoundManager.instance);
+                SoundManager.instance.PlaySFX(Sounds.ArrowLaunch);
                 FireAt(target);
                 _fireCooldown = 2f / _fireRate;
             }
@@ -37,7 +38,7 @@ public class TowerArcher : TowerBase
 
     protected override void FireAt(Transform target)
     {
-        Instantiate(_ammo).GetComponent<TowerArrow>().Initialize(target, _damage, _slow);
+        Instantiate(_ammo, _front.position, _front.rotation).GetComponent<TowerArrow>().Initialize(target, _damage, _slow);
     }
 
     public override void OnSelect()

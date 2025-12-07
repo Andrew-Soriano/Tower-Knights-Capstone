@@ -77,7 +77,8 @@ public class UpgradeMenuController : MonoBehaviour
             UIManager._hoverEnterCallbacks[upgradeButton] = enterCallback;
             UIManager._hoverLeaveCallbacks[upgradeButton] = leaveCallback;
 
-            UIManager.RegisterSafeClick(upgradeButton, () => kvp.Value.action?.applyEffect?.Invoke());
+            var actionButton = kvp.Value;
+            UIManager.RegisterSafeClick(upgradeButton, () => PayForResource(actionButton));
         }
 
         UIManager.RegisterSafeClick(_targetModeButton, UIManager.EnterTargetingMode);
@@ -161,6 +162,7 @@ public class UpgradeMenuController : MonoBehaviour
     {
         PopulateUpgradeMenu(building);
         UIManager.OpenMenu(upgradeMenu);
+        RefreshUpgradeMenu(building);
         if (building is TowerCatapult || building is TowerAlchemist)
             _targetModeButton.style.display = DisplayStyle.Flex;
         else
@@ -188,6 +190,29 @@ public class UpgradeMenuController : MonoBehaviour
     {
         HoveredButton = null;
         _hoverMenu.style.display = DisplayStyle.None;
+    }
+
+    public void PayForResource(UIBuildingActionButton actionButton)
+    {
+        if (CanPayForUpgrade(actionButton))
+        {
+            actionButton.action.applyEffect?.Invoke();
+            CastleController.stockpile.Pay(actionButton.action.levelCosts[actionButton.action.CurrentLevel]);
+            UIManager.StatusBarContoller.RefreshResourceUI(CastleController.stockpile);
+        }
+        else
+        {
+            ShowUpgradeError(actionButton.action.levelCosts[actionButton.action.CurrentLevel]);
+        }
+    }
+
+    public bool CanPayForUpgrade(UIBuildingActionButton actionButton)
+    {
+        if(actionButton.action.CurrentLevel >= actionButton.action.maxLevel)
+        return false;
+
+        var cost = actionButton.action.levelCosts[actionButton.action.CurrentLevel];
+        return CastleController.stockpile.HasResources(cost);
     }
 
     private void OnTowerRotateClicked(RotateDirection direction)

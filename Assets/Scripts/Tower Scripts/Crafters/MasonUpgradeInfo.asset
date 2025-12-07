@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 8
   towerName: Mason
   description: Shapes stones into bricks. Just grey ones, no yellow.
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: 5b586dd3f673d7f4691eb33526a62516, type: 3}
   cost:
     wood: 0
     planks: 0

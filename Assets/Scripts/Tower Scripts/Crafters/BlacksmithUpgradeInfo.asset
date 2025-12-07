@@ -16,7 +16,7 @@ MonoBehaviour:
   towerName: Blacksmith
   description: Produces metal plates from ore. He can be upgraded to make parts,
     but then who will make the plates?
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: d61c6feb0afbec84ab4fc6dd4088a529, type: 3}
   cost:
     wood: 0
     planks: 0

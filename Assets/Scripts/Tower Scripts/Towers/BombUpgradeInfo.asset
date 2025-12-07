@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2
   towerName: Bomb
   description: Fires bombs that damage all targets in an explosion radius.
-  towerIcon: {fileID: 0}
+  towerIcon: {fileID: 21300000, guid: 97321d6be84b2c947bff190202f7ec22, type: 3}
   cost:
     wood: 10
     planks: 0

@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TowerTile : BuildableTile
@@ -12,6 +14,10 @@ public class TowerTile : BuildableTile
 
     [Header("Crafting Prefabs")]
     [SerializeField] private GameObject _SawmillTower;
+    [SerializeField] private GameObject _MasonTower;
+    [SerializeField] private GameObject _BlacksmithTower;
+
+    public static event Action<Resources> towerBuilt;
 
     public void buildTower(towerID id)
     {
@@ -33,8 +39,17 @@ public class TowerTile : BuildableTile
             case towerID.Sawmill:
                 tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);
                 break;
+            case towerID.Mason:
+                tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);
+                break;
+            case towerID.Blacksmith:
+                tower = Instantiate(_SawmillTower, transform.position, Quaternion.identity);
+                break;
+            default:
+                return;
         }
 
+        towerBuilt?.Invoke(TowerDatabase.GetTowerStatic(id).cost);
         gameObject.SetActive(false);
     }
 

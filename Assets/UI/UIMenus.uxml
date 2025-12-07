@@ -6,6 +6,7 @@
             <ui:VisualElement name="MainMenuButtonGroup" style="flex-grow: 1; flex-direction: row; justify-content: center; top: auto; height: auto; margin-bottom: 10%; margin-top: 10%;">
                 <ui:Button text="Start" name="MainMenuStartButton" style="width: 20%; height: 20%;" />
                 <ui:Button text="Turtorial" name="MainMenuTutorialButton" style="width: 20%; height: 20%;" />
+                <ui:Button text="Credits" name="MainMenuCreditsButton" style="width: 20%; height: 20%;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="TutorialMenu" style="flex-grow: 0; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
@@ -14,6 +15,13 @@
                 <ui:Label name="TutorialLabel" style="-unity-text-align: upper-left; font-size: 18px; color: white; white-space: normal;" />
             </ui:ScrollView>
             <ui:Label text="Tutorial" style="-unity-text-outline-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 28px; -unity-text-align: upper-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CreditsMenu" style="flex-grow: 0; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
+            <ui:Button text="Back" name="CreditsBackButton" style="width: 20%; height: 20%; position: absolute; right: 7px; top: 4px;" />
+            <ui:ScrollView style="position: absolute; top: 83px; left: 0; right: 0; bottom: 20px; overflow: auto;">
+                <ui:Label name="CreditsLabel" style="-unity-text-align: upper-left; font-size: 18px; color: white; white-space: normal;" />
+            </ui:ScrollView>
+            <ui:Label text="Credits" style="-unity-text-outline-color: rgb(255, 255, 255); color: rgb(255, 255, 255); font-size: 28px; -unity-text-align: upper-center;" />
         </ui:VisualElement>
         <ui:VisualElement name="GameOverMenu" style="flex-grow: 0; position: absolute; top: 25%; left: 25%; right: 25%; bottom: 25%; flex-direction: column; background-color: rgba(0, 0, 0, 0.61); display: none;">
             <ui:Label text="Game Over" name="GameOverLabel" style="-unity-text-align: upper-center; font-size: 25px; color: rgb(255, 255, 255);" />

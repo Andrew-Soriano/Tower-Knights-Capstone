@@ -7,17 +7,22 @@ public class MainMenuController : MonoBehaviour
     public VisualElement mainMenu;
     private Button _startGameButton;
     private Button _tutorialButton;
+    private Button _creditsButton;
 
     private VisualElement _tutorialMenu;
     private Button _tutorialBackButton;
     private Label _tutorialLabel;
+
+    private VisualElement _creditsMenu;
+    private Button _creditsBackButton;
+    private Label _creditsLabel;
 
     //Game Over Menu
     public VisualElement gameOverMenu;
     private Button _grestartButton;
     private Button _gquitButton;
 
-    //Game Over Menu
+    //Victory Menu
     public VisualElement victoryMenu;
     private Button _vrestartButton;
     private Button _vquitButton;
@@ -33,6 +38,7 @@ public class MainMenuController : MonoBehaviour
         mainMenu = UIManager.Root.Q<VisualElement>("MainMenu");
         _startGameButton = mainMenu.Q<Button>("MainMenuStartButton");
         _tutorialButton = UIManager.Root.Q<Button>("MainMenuTutorialButton");
+        _creditsButton= UIManager.Root.Q<Button>("MainMenuCreditsButton");
 
         //Tutorial Menu
         _tutorialMenu = UIManager.Root.Q<VisualElement>("TutorialMenu");
@@ -45,6 +51,41 @@ The third tab (rightmost) allows you to build resource gathering towers. If you 
 Notice I said upgrades. To upgrade a tower, click on an existing tower on the map (anything you placed, just not an empty space). This will open a menu similar to the build menu, where you can upgrade that tower. This can make crafting and resource buildings more efficient, and have different effects on every combat tower, all of which are usually quite good! However, higher level upgrades (some upgrades have one level, others three) tend to cost refined resources, so don’t rely on this immediately in the early game.
 Your resource gathering and crafting towers payout at the end of every round, and the enemy will be kind enough to wait for you to click the next round button before continuing. Now is the best time to make a plan, and place your towers!
 Survive until the enemy runs out of forces to win, but be warned. They get more guys and bigger baddies over time, so don’t wait until its too late. Build yourself up, until you bring them down! (Or until they get passed you too many times and deplete your Castle’s HP. Those Lightning strikes aren’t free!)
+";
+        _creditsMenu = UIManager.Root.Q<VisualElement>("CreditsMenu");
+        _creditsBackButton = _creditsMenu.Q<Button>("CreditsBackButton");
+        _creditsLabel = _creditsMenu.Q<Label>("CreditsLabel");
+        _creditsLabel.text = @"Lead Programmer (With a “Surprise” Lack of Junior Programmers)
+	Andrew Soriano
+Models From:
+	Kay Lousberg, under the Creative Commons Zero license.
+	Specific sets of KayKit Products Used Include:
+KayKit - Character Pack : Adventurers - https://kaylousberg.itch.io/kaykit-adventurers
+KayKit - Mystery Monthly : Series 4 - https://kaylousberg.itch.io/kaykit-series-4
+KayKit - Mystery Monthly : Series 5 - https://kaylousberg.itch.io/kaykit-series-5
+KayKit - Character Animations - https://kaylousberg.itch.io/kaykit-character-animations
+KayKit - Medieval Hexagon Pack - https://kaylousberg.itch.io/kaykit-medieval-hexagon
+KayKit : Resource Bits (Mostly Used as Screenshots, but the Screenshots came From 3D Models in Unity under this License) - https://kaylousberg.itch.io/resource-bits
+KayKit - Character Pack : Skeletons - https://kaylousberg.itch.io/kaykit-skeletons
+	Etienne Pouvreau- Sylized bomb and explosion VFX unity.  I’m honestly not sure what license, but his itch.io page tags it as royalty free - https://smolware.itch.io/sylized-bomb-and-explosion-vfx-unity
+	Renderer Knight (Real Name Not Given) - Fantasy Skybox FREE   - A Skybox licensed under the Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-free-18353
+CraftPix (Real Name not Provided) - Fantasy RPG Icons Mega Collection – Icons used in game, mostly for upgrades. Made available under Unity the Standard Unity Asset Store EULA here - https://assetstore.unity.com/packages/2d/gui/icons/5800-fantasy-rpg-icons-pack-229460
+And sounds from the incredible people on freesound.org below:
+Footstep_Grass.wav by FallujahQc -- https://freesound.org/s/403163/ -- License: Attribution 3.0
+Rattling Bones.wav by spookymodem -- https://freesound.org/s/202102/ -- License: Creative Commons 0
+lightning strike.wav by parnellij -- https://freesound.org/s/74892/ -- License: Creative Commons 0
+Knight Right Footstep on Gravel 1 (With Chainmail) by Ali_6868 -- https://freesound.org/s/384887/ -- License: Creative Commons 0
+ICEMisc-Hitting A Bag Of Ice_CRB_OwSfx_Loop by Christiaan_Bot00+ -- https://freesound.org/s/766116/ -- License: Creative Commons 0
+Piano loops 190 octave up long loop 120 bpm by josefpres -- https://freesound.org/s/831895/ -- License: Creative Commons 0
+Piano loops 193 octave down short loop 120 bpm by josefpres -- https://freesound.org/s/832667/ -- License: Creative Commons 0
+Arrow.mp3 by thecrow_br -- https://freesound.org/s/574044/ -- License: Creative Commons 0
+Arrow Release and Hit.wav by calvarychurchatlanta -- https://freesound.org/s/179996/ -- License: Creative Commons 0
+Retro, Bomb Explosion.wav by LilMati -- https://freesound.org/s/522572/ -- License: Creative Commons 0
+Bomb, grenade, shot at enemy.wav by Puerta118m -- https://freesound.org/s/471642/ -- License: Creative Commons 0
+Small bomb with hit by rodrigocswm -- https://freesound.org/s/449434/ -- License: Creative Commons 0
+Short twangs cleaned.wav by cubic.archon -- https://freesound.org/s/44192/ -- License: Creative Commons 0
+
+And help from viewers like you (I think?)
 ";
 
         //Game Over Initialize
@@ -67,9 +108,13 @@ Survive until the enemy runs out of forces to win, but be warned. They get more 
         //Main Menu
         _startGameButton.clicked += StartGame;
         _tutorialButton.clicked += ShowTutorial;
+        _creditsButton.clicked += ShowCredits;
 
         //Tutorial Menu
         _tutorialBackButton.clicked += BackToMainMenu;
+
+        //Tutorial Menu
+        _creditsBackButton.clicked += BackToMainMenu;
 
         //Game Over Menu 
         UIManager.RegisterSafeClick(_grestartButton, RestartGame);
@@ -87,7 +132,9 @@ Survive until the enemy runs out of forces to win, but be warned. They get more 
     {
         _startGameButton.clicked -= StartGame;
         _tutorialButton.clicked -= ShowTutorial;
+        _creditsButton.clicked -= ShowCredits;
         _tutorialBackButton.clicked -= BackToMainMenu;
+        _creditsBackButton.clicked -= BackToMainMenu;
         CastleController.gameOver -= OpenGameOverMenu;
         EnemyBaseController.victory -= OpenVictoryMenu;
     }
@@ -113,15 +160,24 @@ Survive until the enemy runs out of forces to win, but be warned. They get more 
         UIManager.StatusBarContoller.NextRoundButton.style.display = DisplayStyle.Flex;
         mainMenu.style.display = DisplayStyle.None;
     }
+
     private void ShowTutorial()
     {
         mainMenu.style.display = DisplayStyle.None;
         _tutorialMenu.style.display = DisplayStyle.Flex;
     }
 
+    private void ShowCredits()
+    {
+        mainMenu.style.display = DisplayStyle.None;
+        _creditsMenu.style.display = DisplayStyle.Flex;
+    }
+
+
     private void BackToMainMenu()
     {
         _tutorialMenu.style.display = DisplayStyle.None;
+        _creditsMenu.style.display = DisplayStyle.None;
         mainMenu.style.display = DisplayStyle.Flex;
     }
 

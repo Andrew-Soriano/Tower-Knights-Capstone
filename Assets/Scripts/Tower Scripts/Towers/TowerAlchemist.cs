@@ -89,6 +89,9 @@ public class TowerAlchemist : TowerBase
 
         foreach (var tile in tiles)
         {
+            if (tile.GetType() != typeof(UnBuildableTile))
+                continue;
+
             Vector3 horizontalTilePos = new Vector3(tile.transform.position.x, 0, tile.transform.position.z);
             float distance = Vector3.Distance(horizontalTowerPos, horizontalTilePos);
 
@@ -105,7 +108,12 @@ public class TowerAlchemist : TowerBase
     {
         UnBuildableTile[] tiles = FindObjectsByType<UnBuildableTile>(FindObjectsSortMode.None);
         foreach (var tile in tiles)
+        {
+            if (tile.GetType() != typeof(UnBuildableTile))
+                continue;
             tile.ResetHighlight();
+        }
+            
     }
 
     private void UpgradeEffectUp()
